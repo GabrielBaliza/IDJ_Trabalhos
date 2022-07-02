@@ -1,6 +1,7 @@
 #define INCLUDE_SDL_MIXER
 
 #include "SDL_include.h"
+#include <string>
 
 class Music{
     private:
@@ -8,9 +9,10 @@ class Music{
     public:
         Music();
         Music(std::string file);
-        void play(int time = -1);
-        void stop(int msToStop = 1500);
-        void open(std::string file);
-        bool isOpen();
+        ~Music();
+        void Play(int time = -1);
+        void Stop(int msToStop = 1500);
+        void Open(std::string file);
+        bool IsOpen();
 
 };

@@ -4,7 +4,9 @@
 
 #include "SDL_include.h"
 
-class State{
+#include <string>
+
+class Sprite{
     private:
         SDL_Texture *texture;
         int width;
@@ -14,11 +16,10 @@ class State{
         Sprite();
         Sprite(std::string file);
         ~Sprite();
-        void open(std::string);
-        void setClip(int x, int y, int w, int h);
-        void render(int x, int y);
-        int getWidth();
-        int getHeight();
-        bool isOpen();
-
+        void Open(std::string file);
+        void SetClip(int x, int y, int w, int h);
+        void Render(int x, int y);
+        int GetWidth();
+        int GetHeight();
+        bool IsOpen();
 };

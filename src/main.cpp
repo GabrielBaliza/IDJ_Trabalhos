@@ -1,25 +1,16 @@
 #define INCLUDE_SDL 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
-#define INCLUDE_SDL_TTF
 
 #include "SDL_include.h"
+#include "Game.h"
 #include <iostream>
 
+
 int main (int argc, char** argv) {
+    Game &jogoT1 = Game::GetInstance();
+    jogoT1.Run();
 
-    /* Inicializa todas as bibliotecas */
-    SDL_Init(SDL_INIT_EVERYTHING);
-    IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
-    Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG);
-    TTF_Init();
-
-    /* Fecha todas */
-    TTF_Quit();
-    Mix_Quit();
-    IMG_Quit();
-    SDL_Quit();
-
-    std::cout << "Passou?" << std::endl;
+    std::cout << "Acabou?" << std::endl;
     return 0;
 }

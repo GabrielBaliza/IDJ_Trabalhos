@@ -2,21 +2,23 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
-#include "SDL_include.h"
 #include "State.h"
+#include "SDL_include.h"
+#include <string>
+
 
 class Game{
     private:
-        static Game *intance;
+        static Game *instance;
         SDL_Window *window;
         SDL_Renderer *renderer;
         State *state;
-        Game(std::string title, int whidth, int height);
+        Game(std::string title, int width, int height);
     public:
-        void run();
+        void Run();
         ~Game();
-        SDL_Renderer *getRenderer();
-        State &getState();
-        static Game &getInstance();
+        SDL_Renderer* GetRenderer();
+        State& GetState();
+        static Game& GetInstance();
 
 };
