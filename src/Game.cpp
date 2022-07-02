@@ -17,11 +17,11 @@ void Game::Run(){
 }
 
 Game::Game(std::string title, int width, int height){
-    if(Game::instance != nullptr){        
+    if(instance != nullptr){        
         std::cout << "Logical error. Game Error" << std::endl;
     }
     else{
-        Game::instance = this;
+        instance = this;
         
     }
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0){
@@ -83,11 +83,11 @@ State& Game::GetState(){
 }
 
 Game& Game::GetInstance(){
-    if(Game::instance != nullptr){
+    if(instance != nullptr){
         return *instance;
     }
     else{
-        Game::instance = new Game(TITLE, WIDTH, HEIGHT);
+        instance = new Game(TITLE, WIDTH, HEIGHT);
         return *instance;
     }
 }
