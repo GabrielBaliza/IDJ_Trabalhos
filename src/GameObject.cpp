@@ -6,18 +6,18 @@ GameObject::GameObject(){
 }
 
 GameObject::~GameObject(){
-    // for(unsigned short int it = components.size() - 1; it != 0; it--){}
+    // for(int it = components.size() - 1; it >= 0; it--){}
     components.clear();
 }
 
 void GameObject::Update(float dt){
-    for(unsigned short int it = components.size() - 1; it != 0; it--){
+    for(int it = components.size() - 1; it >= 0; it--){
         components[it]->Update(dt);
     }
 }
 
 void GameObject::Render(){
-    for(unsigned short int it = components.size() - 1; it != 0; it--){
+    for(int it = components.size() - 1; it >= 0; it--){
         components[it]->Render();
     }
 }
@@ -35,7 +35,7 @@ void GameObject::AddComponent(Component* cpt){
 }
 
 void GameObject::RemoveComponent(Component* cpt){
-    for(unsigned short int it = components.size() - 1; it != 0; it--){
+    for(int it = components.size() - 1; it != 0; it--){
         if(components[it].get() == cpt){
             components.erase(components.begin()+it);    
             return;
@@ -45,7 +45,7 @@ void GameObject::RemoveComponent(Component* cpt){
 }
 
 Component* GameObject::GetComponent(std::string type){
-    for(unsigned short int it = components.size() - 1; it != 0; it--){
+    for(int it = components.size() - 1; it >= 0; it--){
         if(components[it]->Is(type)){
             return components[it].get();
         }
