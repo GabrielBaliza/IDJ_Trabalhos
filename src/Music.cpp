@@ -13,7 +13,7 @@ Music::Music(std::string file){
 }
 
 Music::~Music(){
-    if(music != nullptr){
+    if(IsOpen()){
         Stop(FADE_RATE);
         Mix_FreeMusic(music);
     }

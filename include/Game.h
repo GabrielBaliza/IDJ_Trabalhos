@@ -1,12 +1,17 @@
+#pragma once
+
 #define INCLUDE_SDL 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
-#include "State.h"
+
 #include "SDL_include.h"
 #include <string>
+#include "State.h"
+#include <cstdlib>
+#include <ctime>
 
-
+class State;
 class Game{
     private:
         static Game *instance;

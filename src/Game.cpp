@@ -13,10 +13,13 @@ void Game::Run(){
         state->Update(DELAYTIME);
         state->Render();
         SDL_RenderPresent(renderer);
+        SDL_Delay(33);
+
     }
 }
 
 Game::Game(std::string title, int width, int height){
+    srand(time(NULL));
     if(instance != nullptr){        
         std::cout << "Logical error. Game Error" << std::endl;
     }

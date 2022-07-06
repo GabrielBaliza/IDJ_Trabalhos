@@ -1,18 +1,15 @@
-#include "Game.h" //Game.h inclui State que inclui Sprite.h
+#include "Sprite.h"
+
 #include <iostream>
 
 #define clipOriginX 0
 #define clipOriginY 0
 
-Sprite::Sprite(){
-    texture = nullptr;
-}
+Sprite::Sprite(GameObject& associated) : Component::Component(associated), texture(nullptr){}
 
-Sprite::Sprite(std::string file){
-    texture = nullptr;
+Sprite::Sprite(GameObject& associated, std::string file) : Component::Component(associated), texture(nullptr){
     Open(file);
 }
-
 
 Sprite::~Sprite(){
     if(texture != nullptr){
@@ -32,19 +29,24 @@ void Sprite::Open(std::string file){
     }
     else{
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &heigth);
-    }   
+    }
     SetClip(clipOriginX, clipOriginY, width, heigth);
 
 }
 
-
 void Sprite::SetClip(int x, int y, int w, int h){
     clipRect = {x, y , w, h};
+    associated.box.w = w;
+    associated.box.h = h;
 }
 
-void Sprite::Render(int x, int y){
-    SDL_Rect destRect = {x, y, clipRect.w, clipRect.h};
-    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &destRect);
+void Sprite::Render(){
+    //associated.box = {(float) clipOriginX,(float) clipOriginY,(float) clipRect.w,(float) clipRect.h};
+    SDL_Rect destRect = {(int)associated.box.x, (int)associated.box.y, clipRect.w, clipRect.h};
+    if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &destRect) != 0){
+        std::cout << "Rendering error" << std::endl;
+        std::cout << SDL_GetError() << std::endl;
+    }
 }
 
 int Sprite::GetWidth(){
@@ -64,3 +66,15 @@ bool Sprite::IsOpen(){
     }
 }
 
+void Sprite::Update(float dt){
+    return;
+}
+
+bool Sprite::Is(std::string type){
+    if(type == "Sprite"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
