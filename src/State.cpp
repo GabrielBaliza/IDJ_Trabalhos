@@ -44,6 +44,7 @@ void State::Update(float dt){
 			objectArray.erase(objectArray.begin()+it);
 		}
     }
+	SDL_Delay(dt);
 
 }
 

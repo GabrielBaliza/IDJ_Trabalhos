@@ -47,6 +47,15 @@ bool Sound::IsOpen(){
     }
 }
 
+bool Sound::IsPlaying(){
+    if(channel >= 0){
+        if(Mix_Playing(channel) != 0){
+            return true;
+        }
+    }
+    return false;
+}
+
 void Sound::Update(float dt){
     return;
 }
