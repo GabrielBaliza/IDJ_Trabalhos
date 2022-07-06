@@ -35,11 +35,11 @@ void State::LoadAssets(){
 
 void State::Update(float dt){
     Input();
-    for(int it = objectArray.size() - 1; it >= 0; it--){
+    for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		objectArray[it]->Update(dt);
     }
 
-	for(int it = objectArray.size() - 1; it >= 0; it--){
+	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		if(objectArray[it]->IsDead()){
 			objectArray.erase(objectArray.begin()+it);
 		}
@@ -48,7 +48,7 @@ void State::Update(float dt){
 }
 
 void State::Render(){
-	for(int it = objectArray.size() - 1; it >= 0; it--){
+	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		objectArray[it]->Render();
     }
 }

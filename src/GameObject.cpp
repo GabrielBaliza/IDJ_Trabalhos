@@ -11,13 +11,13 @@ GameObject::~GameObject(){
 }
 
 void GameObject::Update(float dt){
-    for(int it = components.size() - 1; it >= 0; it--){
+    for(int it = 0; it <= (int)components.size() - 1; it++){
         components[it]->Update(dt);
     }
 }
 
 void GameObject::Render(){
-    for(int it = components.size() - 1; it >= 0; it--){
+    for(int it = 0; it <= (int)components.size() - 1; it++){
         components[it]->Render();
     }
 }
