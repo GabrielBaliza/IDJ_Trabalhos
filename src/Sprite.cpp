@@ -41,12 +41,17 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 void Sprite::Render(){
+    Render((int)associated.box.x, (int)associated.box.y);
+}
+
+void Sprite::Render(int x, int y){
     //associated.box = {(float) clipOriginX,(float) clipOriginY,(float) clipRect.w,(float) clipRect.h};
-    SDL_Rect destRect = {(int)associated.box.x, (int)associated.box.y, clipRect.w, clipRect.h};
+    SDL_Rect destRect = {x, y, clipRect.w, clipRect.h};
     if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &destRect) != 0){
         std::cout << "Rendering error" << std::endl;
         std::cout << SDL_GetError() << std::endl;
     }
+
 }
 
 int Sprite::GetWidth(){
