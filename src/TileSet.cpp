@@ -1,8 +1,6 @@
 #include "TileSet.h"
 
-TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
-    GameObject* tileGO = new GameObject();
-	tileSet = new Sprite(*tileGO, file);
+TileSet::TileSet(int tileWidth, int tileHeight, std::string file) : tileSet(*new GameObject(), file){
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
     columns = (tileSet.GetWidth())/tileWidth;

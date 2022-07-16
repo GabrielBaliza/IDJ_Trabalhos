@@ -9,9 +9,8 @@ void Face::Damage(int damage){
         if (sound != nullptr){
             sound->Play();
         }
-        while(sound->IsPlaying()){}
+        //while(sound->IsPlaying()){}
         associated.RequestDelete();
-        
     }
 }
 

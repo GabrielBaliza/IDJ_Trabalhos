@@ -1,5 +1,3 @@
-#include <math.h>
-
 #include "Vec2.h"
 
 Vec2::Vec2(float x, float y){
@@ -14,7 +12,10 @@ Vec2 Vec2::GetRotated(float ang){
     int temp_y = this->y;
 
     this->x = cos_a*temp_x - sin_a*temp_y;
-    this->y = sin_a*temp_x + cos_a*temp_x;
+    this->y = sin_a*temp_x + cos_a*temp_y;
+
+    return {this->x, this->y};
+
 }
 
 Vec2 Vec2::operator+(const Vec2& sum){

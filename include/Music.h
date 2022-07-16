@@ -1,11 +1,12 @@
 #pragma once
 
 #define INCLUDE_SDL_MIXER
-
 #include "SDL_include.h"
+
 #include "Resources.h"
 
 #include <string>
+#include <iostream>
 
 class Music{
     private:

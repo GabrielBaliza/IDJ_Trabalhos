@@ -1,9 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "Sprite.h"
-#include "GameObject.h"
+
+#include <string>
 
 class TileSet{
     private:

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Sound.h"
 
 Sound::Sound(GameObject& associated) : Component::Component(associated), chunk(nullptr){}

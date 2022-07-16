@@ -1,6 +1,7 @@
 #pragma once
 #define PI 3.151592
 
+#include <math.h>
 #include <cstdlib>
 
 class Vec2{

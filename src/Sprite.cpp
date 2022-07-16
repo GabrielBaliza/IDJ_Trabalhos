@@ -1,6 +1,4 @@
-#include "Sprite.h"
-
-#include <iostream>
+#include "Game.h"
 
 #define clipOriginX 0
 #define clipOriginY 0

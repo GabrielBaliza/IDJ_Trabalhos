@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <iostream>
 
 #define TITLE "Gabriel Baliza Rocha - 17/0103293"
 #define WIDTH 1024

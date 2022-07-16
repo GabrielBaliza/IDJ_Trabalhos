@@ -3,14 +3,13 @@
 #define INCLUDE_SDL 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
-
 #include "SDL_include.h"
 
 #include "Component.h"
-#include "GameObject.h"
-#include "Game.h"
+
 #include "Resources.h"
 
+#include <iostream>
 #include <string>
 
 class Sprite : public Component{
