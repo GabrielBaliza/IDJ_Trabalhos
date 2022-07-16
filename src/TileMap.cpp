@@ -32,7 +32,7 @@ void TileMap::Load(std::string file){
 }
 
 void TileMap::SetTileSet(TileSet* tileSet){
-    return;
+    this->tileSet = tileSet;
 }
 
 int& TileMap::At(int x, int y, int z){
@@ -41,11 +41,17 @@ int& TileMap::At(int x, int y, int z){
 }
 
 void TileMap::Render(){
-    return;
+    for(int layer = 0; layer < mapDepth; layer++){
+        RenderLayer(layer, associated.box.x, associated.box.y);
+    }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
-    return;
+    for(int tileX = 0; tileX < mapWidth; tileX++){
+        for(int tileY = 0; tileY < mapHeight; tileY++){
+            tileSet->RenderTile(At(tileX, tileY, layer), tileX*tileSet->GetTileWidth(), tileY*tileSet->GetTileHeight());
+        }
+    }
 }
 
 int TileMap::GetWidth(){

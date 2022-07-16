@@ -16,6 +16,8 @@
 #include "Vec2.h"
 #include "Face.h"
 #include "Sound.h"
+#include "TileMap.h"
+#include "TileSet.h"
 
 class State{
     private:

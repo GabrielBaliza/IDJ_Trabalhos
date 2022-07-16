@@ -4,8 +4,12 @@
 #define BOOM "./assets/audio/boom.wav"
 #define BACKGROUND_AUDIO "./assets/audio/stageState.ogg"
 #define BACKGROUND_FRAME "./assets/img/ocean.jpg"
+#define TILEMAP "./assets/map/tileMap.txt"
+#define TILESET "./assets/img/tileset.png"
 #define MUSIC_TIMESTOPLAY -1 //-1 to continuous
 
+#define TILESET_WIDTH 64
+#define TILESET_HEIGHT 64
 #define clipOriginX 0
 #define clipOriginY 0
 
@@ -14,7 +18,11 @@ State::State(){
 	quitRequested = false;
 	GameObject* gameObject = new GameObject();
 	Sprite* go_sprite = new Sprite(*gameObject, BACKGROUND_FRAME);
+	TileSet* tileSet = new TileSet(TILESET_WIDTH, TILESET_HEIGHT, TILESET);
+	TileMap* go_tileMap = new TileMap(*gameObject, TILEMAP, tileSet);
+	
 	gameObject->AddComponent(go_sprite);
+	gameObject->AddComponent(go_tileMap);
 	objectArray.emplace_back(gameObject);
 
 	LoadAssets();
