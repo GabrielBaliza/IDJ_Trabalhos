@@ -6,6 +6,8 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 class TileMap : public Component{
     private:
