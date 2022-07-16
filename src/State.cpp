@@ -125,8 +125,6 @@ void State::Input() {
 			// Se não, crie um objeto
 			else {
 				Vec2 objPos = Vec2(200.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-				std::cout << mouseX << " " << mouseY << std::endl;
-				std::cout << (int)objPos.x << " " << (int)objPos.y << std::endl;
 				AddObject((int)objPos.x, (int)objPos.y);
 			}
 		}

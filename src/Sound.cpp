@@ -7,7 +7,7 @@ Sound::Sound(GameObject& associated, std::string file) : Sound::Sound(associated
 }
 
 Sound::~Sound(){
-    if(IsOpen()){
+    if(IsOpen() && !IsPlaying()){
         Stop();
     }
 }
