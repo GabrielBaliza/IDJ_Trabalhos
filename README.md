@@ -5,7 +5,7 @@ Universidade de Brasília - Profa. Carla Denise Castanho
 
 Com o meu Makefile é necessário utilizar `sudo make` para rodar (até o momento)
 
-Comentários sobre o Trabalho 2: Não consegui fazer o Sound tocar corretamente, o component era destruido antes do fim do som. Por isso precisei criar uma espera em Face e um novo método em Sound, o que gerou atrasos na atualização da tela (por um tempo pequeno o jogo trava). Além disso em alguns momentos é preciso clicar duas vezes para o pinguin ser destruido. Irrei corrigir isso nos próximos trabalhos.
+Comentários sobre o Trabalho 3: Em alguns momentos é necessário utilizar mais de um clique para que o pinguim seja destruido (no geral funciona com dois cliqes, mas vezes é necessário três cliques rápidos). Fora isso o T3 funciona corretamente;
 
 **T1 - Feito**
 
