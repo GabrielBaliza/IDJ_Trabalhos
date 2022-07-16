@@ -6,8 +6,10 @@
 
 
 #include "SDL_include.h"
-#include <string>
+#include "Resources.h"
 #include "State.h"
+
+#include <string>
 #include <cstdlib>
 #include <ctime>
 

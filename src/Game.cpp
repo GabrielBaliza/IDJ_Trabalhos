@@ -13,8 +13,10 @@ void Game::Run(){
         state->Update(DELAYTIME);
         state->Render();
         SDL_RenderPresent(renderer);
-
     }
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSound();
 }
 
 Game::Game(std::string title, int width, int height){

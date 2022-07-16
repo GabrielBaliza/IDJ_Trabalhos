@@ -5,8 +5,8 @@
 #include "SDL_include.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "Resources.h"
 
-#pragma once
 
 #include <string>
 

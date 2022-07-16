@@ -15,7 +15,6 @@ Music::Music(std::string file){
 Music::~Music(){
     if(IsOpen()){
         Stop(FADE_RATE);
-        Mix_FreeMusic(music);
     }
 }
 
@@ -36,7 +35,7 @@ void Music::Stop(int msToStop){
 
 
 void Music::Open(std::string file){
-    music = Mix_LoadMUS(file.c_str());
+    music = Resources::GetMusic(file);
     if(!IsOpen()){
         std::cout << "Music Openning error" << std::endl;
         std::cout << SDL_GetError() << std::endl;

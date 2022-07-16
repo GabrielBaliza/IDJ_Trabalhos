@@ -11,17 +11,10 @@ Sprite::Sprite(GameObject& associated, std::string file) : Component::Component(
     Open(file);
 }
 
-Sprite::~Sprite(){
-    if(texture != nullptr){
-        SDL_DestroyTexture(texture);
-    }
-}
+Sprite::~Sprite(){}
 
 void Sprite::Open(std::string file){
-    if(IsOpen()){
-        SDL_DestroyTexture(texture);
-    }
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    texture = Resources::GetImage(file);
     if(!IsOpen()){
         std::cout << "Texture Loading error" << std::endl;
         std::cout << SDL_GetError() << std::endl;

@@ -9,6 +9,7 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "Game.h"
+#include "Resources.h"
 
 #include <string>
 

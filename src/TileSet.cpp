@@ -5,8 +5,8 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
 	tileSet = new Sprite(*tileGO, file);
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
-    columns = (tileSet->GetWidth())/tileWidth;
-    rows = (tileSet->GetHeight())/tileHeight;
+    columns = (tileSet.GetWidth())/tileWidth;
+    rows = (tileSet.GetHeight())/tileHeight;
 }
 
 void TileSet::RenderTile(unsigned index, int x, int y){
@@ -15,8 +15,8 @@ void TileSet::RenderTile(unsigned index, int x, int y){
     if(index <= (unsigned)(nTiles - 1)){
         renderX = (index%columns)*tileWidth;
         renderY = (index/columns)*tileHeight;
-        tileSet->SetClip(renderX, renderY, tileWidth, tileHeight);
-        tileSet->Render(x, y);
+        tileSet.SetClip(renderX, renderY, tileWidth, tileHeight);
+        tileSet.Render(x, y);
     }
 }
 

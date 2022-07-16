@@ -10,7 +10,6 @@ Sound::Sound(GameObject& associated, std::string file) : Sound::Sound(associated
 Sound::~Sound(){
     if(IsOpen()){
         Stop();
-        Mix_FreeChunk(chunk);
     }
 }
 
@@ -30,7 +29,7 @@ void Sound::Stop(){
 }
 
 void Sound::Open(std::string file){
-    chunk = Mix_LoadWAV(file.c_str());
+    chunk = Resources::GetSound(file);
     if(!IsOpen()){
         std::cout << "Sound Openning error" << std::endl;
         std::cout << SDL_GetError() << std::endl;
