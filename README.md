@@ -13,7 +13,7 @@ Comentários sobre o Trabalho 2: Não consegui fazer o Sound tocar corretamente,
 
 **T3 - Feito**  
 
-**T4 -**  
+**T4 - Iniciado**  
 
 **T5 -**  
 
