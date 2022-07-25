@@ -7,6 +7,7 @@
 
 #include "Resources.h"
 #include "State.h"
+#include "InputManager.h"
 
 #include <string>
 #include <cstdlib>

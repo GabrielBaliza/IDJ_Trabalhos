@@ -9,6 +9,7 @@ Game *Game::instance = nullptr;
 
 void Game::Run(){
     while(!state->QuitRequested()){
+        InputManager::GetInstance().Update();
         state->Update(DELAYTIME);
         state->Render();
         SDL_RenderPresent(renderer);

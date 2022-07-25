@@ -42,7 +42,6 @@ void State::LoadAssets(){
 }
 
 void State::Update(float dt){
-    Input();
     for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		objectArray[it]->Update(dt);
     }
