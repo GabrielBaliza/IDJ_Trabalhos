@@ -1,17 +1,14 @@
 #pragma once
 
-#define LEFT_ARROW_KEY
-#define RIGHT_ARROW_KEY
-#define UP_ARROW_KEY
-#define DOWN_ARROW_KEY
-#define ESCAPE_KEY
-#define LEFT_MOUSE_BUTTON
-#define SDLK_LEFT
-#define SDLK_RIGHT
-#define SDLK_UP
-#define SDLK_DOWN
-#define SDLK_ESCAPE
-#define SDL_BUTTON_LEFT
+#define LEFT_ARROW_KEY SDLK_LEFT
+#define RIGHT_ARROW_KEY SDLK_RIGHT
+#define UP_ARROW_KEY SDLK_UP
+#define DOWN_ARROW_KEY SDLK_DOWN
+#define ESCAPE_KEY SDLK_ESCAPE
+#define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+
+#define INCLUDE_SDL 
+#include "SDL_include.h"
 
 #include <unordered_map>
 
