@@ -10,7 +10,7 @@ Game *Game::instance = nullptr;
 void Game::Run(){
     while(!state->QuitRequested()){
         InputManager::GetInstance().Update();
-        state->Update(DELAYTIME);
+        state->Update(GetDeltaTime());
         state->Render();
         SDL_RenderPresent(renderer);
     }
@@ -19,7 +19,20 @@ void Game::Run(){
     Resources::ClearSound();
 }
 
+void Game::CalculateDeltaTime(){
+    int prevFrame;
+    prevFrame = frameStart;
+    frameStart = SDL_GetTicks();
+    dt = (frameStart - prevFrame)/1000;
+}   
+
+float Game::GetDeltaTime(){
+    return dt;
+}
+
 Game::Game(std::string title, int width, int height){
+    dt = 0;
+    frameStart = 0;
     srand(time(NULL));
     if(instance != nullptr){        
         std::cout << "Logical error. Game Error" << std::endl;
