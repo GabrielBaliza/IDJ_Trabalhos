@@ -42,6 +42,13 @@ void State::LoadAssets(){
 }
 
 void State::Update(float dt){
+	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+		quitRequested = true;
+	}
+	if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
+		Vec2 objPos = Vec2(200.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseX());
+		AddObject((int)objPos.x, (int)objPos.y);
+	}
     for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		objectArray[it]->Update(dt);
     }

@@ -2,7 +2,9 @@
 
 #include "Component.h"
 #include "Sound.h"
+#include "InputManager.h"
 
+#include <iostream>
 #include <string>
 
 class Face : public Component{

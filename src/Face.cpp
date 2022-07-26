@@ -14,7 +14,14 @@ void Face::Damage(int damage){
 }
 
 void Face::Update(float dt){
-    return;
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+        if(InputManager::GetInstance().GetMouseX() > associated.box.x && InputManager::GetInstance().GetMouseX() < associated.box.x+associated.box.w){
+            if(InputManager::GetInstance().GetMouseY() > associated.box.y && InputManager::GetInstance().GetMouseY() < associated.box.y+associated.box.h){
+                Damage(std::rand() % 10 + 10);
+            }
+
+        }
+    }
 }
 
 void Face::Render(){

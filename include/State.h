@@ -11,12 +11,10 @@
 
 #include "Sprite.h"
 #include "Music.h"
-
 #include "Vec2.h"
 #include "Face.h"
-
 #include "TileMap.h"
-
+#include "InputManager.h"
 
 class State{
     private:
