@@ -19,7 +19,6 @@ void InputManager::Update(){
     updateCounter++;
     quitRequested = false;
 	while (SDL_PollEvent(&event)){
-        
         if(!event.key.repeat){
             if(event.type == SDL_KEYDOWN){
                 keyState[event.key.keysym.sym] = true;
