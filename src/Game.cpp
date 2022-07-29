@@ -9,6 +9,7 @@ Game *Game::instance = nullptr;
 
 void Game::Run(){
     while(!state->QuitRequested()){
+        CalculateDeltaTime();
         InputManager::GetInstance().Update();
         state->Update(GetDeltaTime());
         state->Render();
@@ -23,7 +24,7 @@ void Game::CalculateDeltaTime(){
     int prevFrame;
     prevFrame = frameStart;
     frameStart = SDL_GetTicks();
-    dt = (frameStart - prevFrame)/1000;
+    dt = (frameStart - prevFrame)/1000.0;
 }   
 
 float Game::GetDeltaTime(){
