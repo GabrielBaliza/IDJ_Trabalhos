@@ -41,14 +41,14 @@ int& TileMap::At(int x, int y, int z){
 
 void TileMap::Render(){
     for(int layer = 0; layer < mapDepth; layer++){
-        RenderLayer(layer, associated.box.x, associated.box.y);
+        RenderLayer(layer, Camera::pos.x, Camera::pos.y);
     }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
     for(int tileX = 0; tileX < mapWidth; tileX++){
         for(int tileY = 0; tileY < mapHeight; tileY++){
-            tileSet->RenderTile(At(tileX, tileY, layer), tileX*tileSet->GetTileWidth(), tileY*tileSet->GetTileHeight());
+            tileSet->RenderTile(At(tileX, tileY, layer), (tileX + cameraX)*tileSet->GetTileWidth(), (tileY + cameraY)*tileSet->GetTileHeight());
         }
     }
 }
@@ -70,11 +70,6 @@ void TileMap::Update(float dt){
 }
 
 bool TileMap::Is(std::string type){
-    if(type == "TileMap"){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return(type == "TileMap");
     
 }

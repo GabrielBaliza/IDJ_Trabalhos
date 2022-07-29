@@ -63,11 +63,6 @@ void Sound::Render(){
 }
 
 bool Sound::Is(std::string type){
-    if(type == "Sound"){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return(type == "Sound");
     
 }
