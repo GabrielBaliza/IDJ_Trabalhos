@@ -15,6 +15,8 @@
 #include "Face.h"
 #include "TileMap.h"
 #include "InputManager.h"
+#include "Camera.h"
+#include "CameraFollower.h"
 
 class State{
     private:

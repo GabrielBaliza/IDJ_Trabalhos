@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "TileSet.h"
+#include "Camera.h"
 
 #include <vector>
 #include <string>
