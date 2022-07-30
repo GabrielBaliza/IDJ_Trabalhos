@@ -53,7 +53,7 @@ void State::Update(float dt){
 		quitRequested = true;
 	}
 	if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
-		Vec2 objPos = Vec2(0.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
+		Vec2 objPos = Vec2(150.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
 		AddObject((int)objPos.x, (int)objPos.y);
 	}
     for(int it = 0; it <= (int)objectArray.size() - 1; it++){
