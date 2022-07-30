@@ -1,4 +1,4 @@
-#define MOV_SPEED 20
+#define MOV_SPEED 100
 #define HSQRT2 0.707
 
 #include "Camera.h"

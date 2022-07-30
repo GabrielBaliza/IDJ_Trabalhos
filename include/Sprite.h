@@ -6,8 +6,8 @@
 #include "SDL_include.h"
 
 #include "Component.h"
-
 #include "Resources.h"
+#include "Camera.h"
 
 #include <iostream>
 #include <string>

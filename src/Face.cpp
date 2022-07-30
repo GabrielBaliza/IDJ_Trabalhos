@@ -15,25 +15,19 @@ void Face::Damage(int damage){
 
 void Face::Update(float dt){
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
-        if(InputManager::GetInstance().GetMouseX() > associated.box.x && InputManager::GetInstance().GetMouseX() < associated.box.x+associated.box.w){
-            if(InputManager::GetInstance().GetMouseY() > associated.box.y && InputManager::GetInstance().GetMouseY() < associated.box.y+associated.box.h){
+        if(associated.box.Contains(InputManager::GetInstance().GetMouseX() - Camera::pos.x, InputManager::GetInstance().GetMouseY() - Camera::pos.y)){
                 Damage(std::rand() % 10 + 10);
-            }
-
         }
+
+        
     }
 }
 
 void Face::Render(){
-    return;
+
 }
 
 bool Face::Is(std::string type){
-    if(type == "Face"){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return (type == "Face");
     
 }

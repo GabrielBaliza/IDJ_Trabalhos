@@ -1,3 +1,4 @@
+#define PARALLAX 0.5
 #include "TileMap.h"
 
 TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet) : Component::Component(associated){
@@ -19,7 +20,7 @@ void TileMap::Load(std::string file){
         mapDepth = std::stoi(line);
         while(count < mapDepth*mapHeight*mapWidth){
             std::getline(mapa, line, ',');
-            tileMatrix.push_back(std::stoi(line) - 1);  
+            tileMatrix.push_back(std::stoi(line) - 1);
             count++;
         }
         mapa.close();
@@ -41,14 +42,15 @@ int& TileMap::At(int x, int y, int z){
 
 void TileMap::Render(){
     for(int layer = 0; layer < mapDepth; layer++){
-        RenderLayer(layer, Camera::pos.x + Camera::pos.x*layer*0.5, Camera::pos.y + Camera::pos.y*layer*0.5);
+        //RenderLayer(layer, Camera::pos.x + Camera::pos.x*layer*PARALLAX, Camera::pos.y + Camera::pos.y*layer*PARALLAX);
+        RenderLayer(layer, Camera::pos.x, Camera::pos.y);
     }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
     for(int tileX = 0; tileX < mapWidth; tileX++){
         for(int tileY = 0; tileY < mapHeight; tileY++){
-            tileSet->RenderTile(At(tileX, tileY, layer), (tileX + cameraX)*tileSet->GetTileWidth(), (tileY + cameraY)*tileSet->GetTileHeight());
+            tileSet->RenderTile(At(tileX, tileY, layer), tileX*tileSet->GetTileWidth() + cameraX, tileY*tileSet->GetTileHeight() + cameraY);
         }
     }
 }
