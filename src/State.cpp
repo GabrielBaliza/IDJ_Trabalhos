@@ -53,7 +53,7 @@ void State::Update(float dt){
 		quitRequested = true;
 	}
 	if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
-		Vec2 objPos = Vec2(150.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
+		Vec2 objPos = Vec2(0.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
 		AddObject((int)objPos.x, (int)objPos.y);
 	}
     for(int it = 0; it <= (int)objectArray.size() - 1; it++){
@@ -81,8 +81,8 @@ void State::AddObject(int mouseX, int mouseY){
 	Sound* enemy_boom = new Sound(*enemy, BOOM);
 	Face* enemy_face = new Face(*enemy);
 
-	enemy->box.x = (mouseX  - (enemy_sprite->GetWidth()) / 2) - Camera::pos.x;
-	enemy->box.y = (mouseY - (enemy_sprite->GetHeight()) / 2) - Camera::pos.y;
+	enemy->box.x = (mouseX  - (enemy_sprite->GetWidth()) / 2) + Camera::pos.x;
+	enemy->box.y = (mouseY - (enemy_sprite->GetHeight()) / 2) + Camera::pos.y;
 	
 	enemy->AddComponent(enemy_sprite);
 	enemy->AddComponent(enemy_boom);
