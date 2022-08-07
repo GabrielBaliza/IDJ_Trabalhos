@@ -16,6 +16,7 @@
 
 State::State(){
 	quitRequested = false;
+	started = false;
 	GameObject* gameObject = new GameObject();
 	Sprite* go_sprite = new Sprite(*gameObject, BACKGROUND_FRAME);
 	CameraFollower* go_cameraFollower = new CameraFollower(*gameObject);
@@ -23,12 +24,18 @@ State::State(){
 	gameObject->AddComponent(go_cameraFollower);
 	objectArray.emplace_back(gameObject);
 
-
 	GameObject* gameObjectMap = new GameObject();
 	TileSet* tileSet = new TileSet(TILESET_WIDTH, TILESET_HEIGHT, TILESET);
 	TileMap* go_tileMap = new TileMap(*gameObjectMap, TILEMAP, tileSet);	
 	gameObjectMap->AddComponent(go_tileMap);
 	objectArray.emplace_back(gameObjectMap);
+
+	GameObject* gameObjectAlien = new GameObject();
+	Alien* go_alien = new Alien(*gameObjectAlien, 1);
+	gameObjectAlien->box.x = 512;
+	gameObjectAlien->box.y = 300;
+	gameObjectAlien->AddComponent(go_alien);
+	objectArray.emplace_back(gameObjectAlien);
 
 	LoadAssets();
     music.Play(MUSIC_TIMESTOPLAY);
@@ -77,16 +84,48 @@ void State::Render(){
 
 void State::AddObject(int mouseX, int mouseY){
 	GameObject* enemy = new GameObject();
-	Sprite* enemy_sprite = new Sprite(*enemy, PINGINFACE);
-	Sound* enemy_boom = new Sound(*enemy, BOOM);
-	Face* enemy_face = new Face(*enemy);
+	//Sprite* enemy_sprite = new Sprite(*enemy, PINGINFACE);
+	//Sound* enemy_boom = new Sound(*enemy, BOOM);
+	//Face* enemy_face = new Face(*enemy);
 
-	enemy->box.x = (mouseX  - (enemy_sprite->GetWidth()) / 2) + Camera::pos.x;
-	enemy->box.y = (mouseY - (enemy_sprite->GetHeight()) / 2) + Camera::pos.y;
+	//enemy->box.x = (mouseX  - (enemy_sprite->GetWidth()) / 2) + Camera::pos.x;
+	//enemy->box.y = (mouseY - (enemy_sprite->GetHeight()) / 2) + Camera::pos.y;
 	
-	enemy->AddComponent(enemy_sprite);
-	enemy->AddComponent(enemy_boom);
-	enemy->AddComponent(enemy_face);
+	//enemy->AddComponent(enemy_sprite);
+	//enemy->AddComponent(enemy_boom);
+	//enemy->AddComponent(enemy_face);
 
 	objectArray.emplace_back(enemy);
+}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject* go){
+	std::shared_ptr<GameObject> ptrShare(go);
+	objectArray.push_back(ptrShare);
+	if(started == true){
+		go->Start();
+	}
+	std::weak_ptr<GameObject> wPtr = ptrShare;
+	return wPtr;
+}
+
+
+void State::Start(){
+	LoadAssets();
+	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
+		objectArray[it]->Start();
+    }
+	started = true;
+
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
+	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
+		if(objectArray[it].get() == go){
+			std::weak_ptr<GameObject> wPtr = objectArray[it];
+			return wPtr;
+		}
+    }
+	std::weak_ptr<GameObject> wPtr_null;
+	wPtr_null.reset();
+	return wPtr_null;
 }

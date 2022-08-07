@@ -12,20 +12,20 @@
 #include "Sprite.h"
 #include "Music.h"
 #include "Vec2.h"
-#include "Face.h"
 #include "TileMap.h"
 #include "InputManager.h"
 #include "Camera.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 class State{
     private:
-        //Sprite bg;
         Music music;
         bool quitRequested;
-        std::vector<std::unique_ptr<GameObject>> objectArray;
+        std::vector<std::shared_ptr<GameObject>> objectArray;
         void Input();
         void AddObject(int mouseX, int mouseY);
+        bool started;
     public:
         State();
         ~State();
@@ -33,5 +33,7 @@ class State{
         void LoadAssets();
         void Update(float dt);
         void Render();
-
+        void Start();
+        std::weak_ptr<GameObject> AddObject(GameObject* go);
+        std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
 };

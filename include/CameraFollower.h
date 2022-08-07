@@ -12,5 +12,4 @@ class CameraFollower : public Component{
         void Render();
         bool Is(std::string type);
 
-
 };
