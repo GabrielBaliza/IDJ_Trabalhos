@@ -42,6 +42,7 @@ void Alien::Update(float dt){
             }
         }
         else if(taskQueue.front().type == Action::ActionType::SHOOT){
+            //std::cout << "Mouse X: " << InputManager::GetInstance().GetMouseX() << "   Mouse Y: " << InputManager::GetInstance().GetMouseY() << std::endl;
             taskQueue.pop();
         }
     }

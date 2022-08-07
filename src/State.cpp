@@ -32,8 +32,7 @@ State::State(){
 
 	GameObject* gameObjectAlien = new GameObject();
 	Alien* go_alien = new Alien(*gameObjectAlien, 1);
-	gameObjectAlien->box.x = 512 - gameObjectAlien->box.w/2;
-	gameObjectAlien->box.y = 300 - gameObjectAlien->box.h/2;
+	gameObjectAlien->box.Centralize(512, 300);
 	gameObjectAlien->AddComponent(go_alien);
 	objectArray.emplace_back(gameObjectAlien);
 

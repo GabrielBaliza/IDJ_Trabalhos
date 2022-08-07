@@ -23,3 +23,8 @@ bool Rect::Contains(float x1, float y1){
     }
 
 }
+
+void Rect::Centralize(float x, float y){
+    this->x = x - this->w/2; 
+    this->y = y - this->h/2;
+}
