@@ -2,11 +2,16 @@
 
 #define SPEED 100
 #define ALIEN "./assets/img/alien.png"
+#define MAXHP 100
+#define PI2 6.283185307
 
 #include "Component.h"
 #include "Vec2.h"
 #include "Sprite.h"
 #include "InputManager.h"
+#include "Minion.h"
+#include "Game.h"
+#include "State.h"
 
 #include <iostream>
 #include <string>

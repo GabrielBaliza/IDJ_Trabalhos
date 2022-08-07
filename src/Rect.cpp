@@ -28,3 +28,7 @@ void Rect::Centralize(float x, float y){
     this->x = x - this->w/2; 
     this->y = y - this->h/2;
 }
+
+Vec2 Rect::Center(){
+    return {x + w/2, y + h/2};
+}

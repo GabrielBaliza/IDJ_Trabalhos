@@ -31,7 +31,7 @@ State::State(){
 	objectArray.emplace_back(gameObjectMap);
 
 	GameObject* gameObjectAlien = new GameObject();
-	Alien* go_alien = new Alien(*gameObjectAlien, 1);
+	Alien* go_alien = new Alien(*gameObjectAlien, 5);
 	gameObjectAlien->box.Centralize(512, 300);
 	gameObjectAlien->AddComponent(go_alien);
 	objectArray.emplace_back(gameObjectAlien);

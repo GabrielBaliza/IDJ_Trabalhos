@@ -6,7 +6,8 @@ Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associ
     associated.box.w = go_sprite->GetWidth();
     associated.box.h = go_sprite->GetHeight();
     speed = {0, 0};
-    hp = 100;
+    hp = MAXHP;
+    minionArray.resize(nMinions);
 }
 
 Alien::~Alien(){
@@ -15,7 +16,16 @@ Alien::~Alien(){
 
 Alien::Action::Action(ActionType type, float x, float y) : type(type), pos({x, y}){}
 
-void Alien::Start(){}
+void Alien::Start(){
+    State& state = Game::GetInstance().GetState();
+    for(int i = 0; i < (int) minionArray.size(); i++){
+        float distribute = PI2*i/minionArray.size();
+        GameObject* go = new GameObject();
+        Minion* go_Minion = new Minion(*go, state.GetObjectPtr(&associated), distribute);
+        go->AddComponent(go_Minion);
+        minionArray[i] = state.AddObject(go);
+    }
+}
 
 void Alien::Update(float dt){
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
