@@ -3,6 +3,8 @@
 Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated){
     Sprite* go_sprite = new Sprite(associated, ALIEN);
     associated.AddComponent(go_sprite);
+    associated.box.w = go_sprite->GetWidth();
+    associated.box.h = go_sprite->GetHeight();
     speed = {0, 0};
     hp = 100;
 }
@@ -28,15 +30,14 @@ void Alien::Update(float dt){
 
         if(taskQueue.front().type == Action::ActionType::MOVE){
             float dist;
-            dist = sqrt(pow((taskQueue.front().pos.x - associated.box.x), 2.0) + pow((taskQueue.front().pos.y - associated.box.y), 2.0));
-            speed.x = SPEED*(taskQueue.front().pos.x - associated.box.x)/dist;
-            speed.y = SPEED*(taskQueue.front().pos.y - associated.box.y)/dist;
+            dist = sqrt(pow((taskQueue.front().pos.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((taskQueue.front().pos.y - (associated.box.y + associated.box.h/2)), 2.0));
+            speed.x = SPEED*(taskQueue.front().pos.x - (associated.box.x + associated.box.w/2))/dist;
+            speed.y = SPEED*(taskQueue.front().pos.y - (associated.box.y + associated.box.h/2))/dist;
             associated.box.x += dt*speed.x;
             associated.box.y += dt*speed.y;
             if(dist <= dt * SPEED){
-                associated.box.x = taskQueue.front().pos.x;
-                associated.box.y = taskQueue.front().pos.y;
-                std::cout<<"pop"<< taskQueue.size()<< std::endl;
+                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
+                associated.box.y = taskQueue.front().pos.y - associated.box.h/2;
                 taskQueue.pop();
             }
         }
