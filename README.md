@@ -5,7 +5,7 @@ Universidade de Brasília - Profa. Carla Denise Castanho
 
 Com o meu Makefile é necessário utilizar `sudo make` para rodar (até o momento)
 
-Comentários sobre o Trabalho 4: Com este trabalho consegui entender o membro State::Input() dado, e consequentemente entender que o que eu achava que era um erro anteriormente, estava correto. Implementei uma primeira versão do parallax scrolling, mas os pinguins ainda estão sobre todas as layers. 
+Comentários sobre o Trabalho 5: Após iniciar o jogo é necessário mover o mouse para o tiro funcionar corretamente (sem mover o mouse o tiro é feito para a posição (0,0). Fora isso, tudo parece funcionar como esperado.
 
 **T1 - Feito**
 
@@ -15,7 +15,7 @@ Comentários sobre o Trabalho 4: Com este trabalho consegui entender o membro St
 
 **T4 - Feito**  
 
-**T5 -**  
+**T5 -Feito**  
 
 **T6 -**
 
