@@ -53,7 +53,6 @@ void Alien::Update(float dt){
             if(minionArray.size() > 0){
                 int randMinion = std::rand() % minionArray.size();
                 Minion* cMinion = (Minion*)minionArray[randMinion].lock().get()->GetComponent("Minion");
-                //Minion* cMinion = (Minion*)state.GetObjectPtr(minionArray[0].lock().get()).lock().get()->GetComponent("Minion");
                 cMinion->Shoot(taskQueue.front().pos);
             }
             taskQueue.pop();    
