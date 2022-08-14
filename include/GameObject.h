@@ -26,5 +26,5 @@ class GameObject{
         Rect box;
         bool started;
         void Start();
-
+        double angleDeg;
 };

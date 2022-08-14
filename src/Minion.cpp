@@ -4,11 +4,16 @@
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component::Component(associated), alienCenter(alienCenter){
     
     arc = arcOffsetDeg;
+    associated.angleDeg = 90;
 
     Sprite* go_sprite = new Sprite(associated, MINION);
+
+    float randSize = (rand() % 51 + 100)/100.0;
+    go_sprite->SetScale(randSize, randSize);
+    
     associated.AddComponent(go_sprite);
     
-    Vec2 posInicial{200, 0};
+    Vec2 posInicial{150, 0};
     posInicial.GetRotated(arc);
     if(!alienCenter.lock()){
         std::cout << "Null GameObject Pointer Error!" << std::endl;
@@ -28,8 +33,10 @@ void Minion::Update(float dt){
     }
     else{
         arc += dt * ANG_VEL;
-        Vec2 posInicial{200, 0};
+        associated.angleDeg = arc;
+        Vec2 posInicial{150, 0};
         posInicial.GetRotated(arc);
+        associated.angleDeg = (180/PI)*arc;
         posInicial = alienCenter.lock()->box.Center() + posInicial;
         associated.box.Centralize(posInicial.x, posInicial.y);
     }

@@ -26,7 +26,6 @@ void Alien::Start(){
 }
 
 void Alien::Update(float dt){
-    //State& state = Game::GetInstance().GetState();
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
         Action objAction(Action::ActionType::SHOOT, InputManager::GetInstance().GetMouseX() + Camera::pos.x, InputManager::GetInstance().GetMouseY() + Camera::pos.y);
         taskQueue.push(objAction);
@@ -58,6 +57,7 @@ void Alien::Update(float dt){
             taskQueue.pop();    
         }
     }
+    associated.angleDeg -= dt * ALIEN_ANG_VEL;
     if(hp <= 0){
         associated.RequestDelete();
     }

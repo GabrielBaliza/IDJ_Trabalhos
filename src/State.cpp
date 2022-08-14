@@ -83,17 +83,7 @@ void State::Render(){
 
 void State::AddObject(int mouseX, int mouseY){
 	GameObject* enemy = new GameObject();
-	//Sprite* enemy_sprite = new Sprite(*enemy, PINGINFACE);
-	//Sound* enemy_boom = new Sound(*enemy, BOOM);
-	//Face* enemy_face = new Face(*enemy);
-
-	//enemy->box.x = (mouseX  - (enemy_sprite->GetWidth()) / 2) + Camera::pos.x;
-	//enemy->box.y = (mouseY - (enemy_sprite->GetHeight()) / 2) + Camera::pos.y;
 	
-	//enemy->AddComponent(enemy_sprite);
-	//enemy->AddComponent(enemy_boom);
-	//enemy->AddComponent(enemy_face);
-
 	objectArray.emplace_back(enemy);
 }
 

@@ -8,7 +8,7 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     distanceLeft = maxDistance;
     this->damage = damage;
     this->speed = {speed*cos(angle) , speed*sin(angle)};
-    //std::cout << angle * 180 / PI << std::endl;
+    associated.angleDeg = (180/PI)*angle;
     
 }
 

@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "Resources.h"
 #include "Camera.h"
+#include "Vec2.h"
 
 #include <iostream>
 #include <string>
@@ -18,6 +19,7 @@ class Sprite : public Component{
         int width;
         int heigth; 
         SDL_Rect clipRect;
+        Vec2 scale;
     public:
         Sprite(GameObject& associated);
         Sprite(GameObject& associated, std::string file);
@@ -31,4 +33,6 @@ class Sprite : public Component{
         bool IsOpen();
         void Update(float dt);
         bool Is(std::string type);
+        void SetScale(float scaleX, float scaleY);
+        Vec2 GetScale();
 };

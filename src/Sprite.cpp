@@ -3,9 +3,12 @@
 #define clipOriginX 0
 #define clipOriginY 0
 
-Sprite::Sprite(GameObject& associated) : Component::Component(associated), texture(nullptr){}
+Sprite::Sprite(GameObject& associated) : Component::Component(associated), texture(nullptr){
+    scale = {1.0, 1.0};
+}
 
 Sprite::Sprite(GameObject& associated, std::string file) : Component::Component(associated), texture(nullptr){
+    scale = {1.0, 1.0};
     Open(file);
 }
 
@@ -38,8 +41,8 @@ void Sprite::Render(){
 
 void Sprite::Render(int x, int y){
     //associated.box = {(float) clipOriginX,(float) clipOriginY,(float) clipRect.w,(float) clipRect.h};
-    SDL_Rect destRect = {x, y, clipRect.w, clipRect.h};
-    if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &destRect) != 0){
+    SDL_Rect destRect = {x, y, (int)clipRect.w*(int)scale.x, (int)clipRect.h*(int)scale.y};
+    if(SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &destRect, associated.angleDeg, nullptr, SDL_FLIP_NONE) != 0){
         std::cout << "Rendering error" << std::endl;
         std::cout << SDL_GetError() << std::endl;
     }
@@ -47,11 +50,11 @@ void Sprite::Render(int x, int y){
 }
 
 int Sprite::GetWidth(){
-    return width;
+    return (int)(width*scale.x);
 }
 
 int Sprite::GetHeight(){
-    return heigth;
+    return (int)(heigth*scale.y);
 }
 
 bool Sprite::IsOpen(){
@@ -69,4 +72,18 @@ void Sprite::Update(float dt){
 
 bool Sprite::Is(std::string type){
     return(type == "Sprite");
+}
+
+Vec2 Sprite::GetScale(){
+    return scale;
+}
+
+void Sprite::SetScale(float scaleX, float scaleY){
+    scale.x = (scaleX > 0) ? scaleX : scale.x;
+    scale.y = (scaleY > 0) ? scaleY : scale.y;
+    Vec2 prevCenter = associated.box.Center();
+    associated.box.w = GetWidth();
+    associated.box.h = GetHeight();
+
+    associated.box.Centralize(prevCenter);
 }
