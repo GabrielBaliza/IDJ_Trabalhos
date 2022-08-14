@@ -3,8 +3,6 @@
 Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated){
     Sprite* go_sprite = new Sprite(associated, ALIEN);
     associated.AddComponent(go_sprite);
-    associated.box.w = go_sprite->GetWidth();
-    associated.box.h = go_sprite->GetHeight();
     speed = {0, 0};
     hp = MAXHP;
     minionArray.resize(nMinions);
@@ -28,6 +26,7 @@ void Alien::Start(){
 }
 
 void Alien::Update(float dt){
+    State& state = Game::GetInstance().GetState();
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
         Action objAction(Action::ActionType::SHOOT, InputManager::GetInstance().GetMouseX() + Camera::pos.x, InputManager::GetInstance().GetMouseY() + Camera::pos.y);
         taskQueue.push(objAction);
@@ -37,7 +36,6 @@ void Alien::Update(float dt){
         taskQueue.push(objAction);
     }
     if(taskQueue.size() >= 1){
-
         if(taskQueue.front().type == Action::ActionType::MOVE){
             float dist;
             dist = sqrt(pow((taskQueue.front().pos.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((taskQueue.front().pos.y - (associated.box.y + associated.box.h/2)), 2.0));
@@ -52,8 +50,13 @@ void Alien::Update(float dt){
             }
         }
         else if(taskQueue.front().type == Action::ActionType::SHOOT){
-            //std::cout << "Mouse X: " << InputManager::GetInstance().GetMouseX() << "   Mouse Y: " << InputManager::GetInstance().GetMouseY() << std::endl;
-            taskQueue.pop();
+            if(minionArray.size() > 0){
+                int randMinion = std::rand() % minionArray.size();
+                Minion* cMinion = (Minion*)minionArray[randMinion].lock().get()->GetComponent("Minion");
+                //Minion* cMinion = (Minion*)state.GetObjectPtr(minionArray[0].lock().get()).lock().get()->GetComponent("Minion");
+                cMinion->Shoot(taskQueue.front().pos);
+            }
+            taskQueue.pop();    
         }
     }
     if(hp <= 0){
