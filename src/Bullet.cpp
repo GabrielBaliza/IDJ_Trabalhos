@@ -2,7 +2,8 @@
 
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite) : Component::Component(associated){
-    Sprite* go_sprite = new Sprite(associated, sprite);
+    Sprite* go_sprite = new Sprite(associated, sprite, 3, 0.3);
+    go_sprite->SetScale(2, 2);
     associated.AddComponent(go_sprite);
 
     distanceLeft = maxDistance;
