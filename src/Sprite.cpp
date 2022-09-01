@@ -7,8 +7,10 @@ Sprite::Sprite(GameObject& associated) : Component::Component(associated), textu
     scale = {1.0, 1.0};
 }
 
-Sprite::Sprite(GameObject& associated, std::string file) : Component::Component(associated), texture(nullptr){
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime) : Component::Component(associated), texture(nullptr), frameCount(frameCount), frameTime(frameTime){
     scale = {1.0, 1.0};
+    currentFrame = 0;
+    timeElapsed = 0;
     Open(file);
 }
 
@@ -24,7 +26,7 @@ void Sprite::Open(std::string file){
     else{
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &heigth);
     }
-    SetClip(clipOriginX, clipOriginY, width, heigth);
+    SetClip(clipOriginX, clipOriginY, GetWidth(), GetHeight());
 
 }
 
@@ -50,11 +52,11 @@ void Sprite::Render(int x, int y){
 }
 
 int Sprite::GetWidth(){
-    return (int)(width*scale.x);
+    return (int)(width/frameCount);
 }
 
 int Sprite::GetHeight(){
-    return (int)(heigth*scale.y);
+    return (int)(heigth);
 }
 
 bool Sprite::IsOpen(){
@@ -67,7 +69,15 @@ bool Sprite::IsOpen(){
 }
 
 void Sprite::Update(float dt){
-    return;
+    timeElapsed += dt;
+    if(timeElapsed >= frameTime){
+        currentFrame++;
+        timeElapsed = 0;
+        if((currentFrame+1)*GetWidth() >= width){
+            currentFrame = 0;
+        }
+        SetClip(currentFrame*GetWidth(), clipOriginY, GetWidth(), GetHeight());
+    }
 }
 
 bool Sprite::Is(std::string type){
@@ -84,6 +94,21 @@ void Sprite::SetScale(float scaleX, float scaleY){
     Vec2 prevCenter = associated.box.Center();
     associated.box.w = GetWidth();
     associated.box.h = GetHeight();
-
     associated.box.Centralize(prevCenter);
+}
+
+
+void Sprite::SetFrame(int frame){
+    currentFrame = frame;
+    SetClip(currentFrame*GetWidth(), clipOriginY, GetWidth(), GetHeight());
+}
+
+void Sprite::SetFrameCount(int frameCount){
+    this->frameCount = frameCount;
+    currentFrame = 0;
+    SetClip(currentFrame*GetWidth(), clipOriginY, GetWidth(), GetHeight());
+}
+
+void Sprite::SetFrameTime(float frameTime){
+    this->frameTime = frameTime;   
 }
