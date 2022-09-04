@@ -50,8 +50,17 @@ void Alien::Update(float dt){
         }
         else if(taskQueue.front().type == Action::ActionType::SHOOT){
             if(minionArray.size() > 0){
-                int randMinion = std::rand() % minionArray.size();
-                Minion* cMinion = (Minion*)minionArray[randMinion].lock().get()->GetComponent("Minion");
+                float minDist = 100000000, dist;
+                int closest = 0;
+                for(int it = 0; it < (int)minionArray.size(); it++){
+                    dist = sqrt(pow((taskQueue.front().pos.x - (minionArray[it].lock().get()->box.x)), 2.0) + pow((taskQueue.front().pos.y - (minionArray[it].lock().get()->box.y)), 2.0));
+                    if(dist < minDist){
+                        minDist = dist;
+                        closest = it;
+                    }
+                }
+                //int randMinion = std::rand() % minionArray.size();
+                Minion* cMinion = (Minion*)minionArray[closest].lock().get()->GetComponent("Minion");
                 cMinion->Shoot(taskQueue.front().pos);
             }
             taskQueue.pop();    
