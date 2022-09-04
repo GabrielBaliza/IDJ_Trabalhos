@@ -29,6 +29,7 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 void Minion::Update(float dt){
     if(!alienCenter.lock()){
         alienCenter.lock()->RequestDelete();
+        associated.RequestDelete();
         return;
     }
     else{
@@ -51,9 +52,9 @@ bool Minion::Is(std::string type){
 void Minion::Shoot(Vec2 target){
     GameObject* go_bullet = new GameObject();
     Vec2 minionCenter = associated.box.Center();
-    go_bullet->box.Centralize(minionCenter);
     float angle = atan2((target.y - minionCenter.y), (target.x - minionCenter.x));
-    Bullet* bullet = new Bullet(*go_bullet, angle, BULLETSPEED, MINION_DAMAGE, MAXDIST, BULLET);
+    Bullet* bullet = new Bullet(*go_bullet, angle, BULLETSPEED, MINION_DAMAGE, MAXDIST, BULLET, 3, 0.3);
+    go_bullet->box.Centralize(minionCenter);
     go_bullet->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go_bullet);
 }

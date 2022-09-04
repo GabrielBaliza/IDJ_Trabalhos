@@ -36,6 +36,12 @@ State::State(){
 	gameObjectAlien->AddComponent(go_alien);
 	objectArray.emplace_back(gameObjectAlien);
 
+	GameObject* gameObjectPenguinBody = new GameObject();
+	PenguinBody *penguinBody = new PenguinBody(*gameObjectPenguinBody);
+	gameObjectPenguinBody->box.Centralize(704, 640);
+	gameObjectPenguinBody->AddComponent(penguinBody);
+	objectArray.emplace_back(gameObjectPenguinBody);
+
 	LoadAssets();
     music.Play(MUSIC_TIMESTOPLAY);
 }

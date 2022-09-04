@@ -6,7 +6,7 @@
 #define MAXDIST 500
 #define MINION_DAMAGE 15
 #define ANG_VEL 0.5
-#define PI 3.151592
+#define PI 3.141592
 
 #include "Component.h"
 #include "Vec2.h"

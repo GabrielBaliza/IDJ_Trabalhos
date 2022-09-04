@@ -1,6 +1,6 @@
 #pragma once
 
-#define PI 3.151592
+#define PI 3.141592
 
 #include "Component.h"
 #include "Vec2.h"
@@ -15,7 +15,7 @@ class Bullet : public Component{
         float distanceLeft;
         int damage; 
     public:
-        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite);
+        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount = 1, float frameTime = 1);
         void Update(float dt);
         void Render();
         bool Is(std::string type);

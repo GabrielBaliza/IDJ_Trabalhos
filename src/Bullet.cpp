@@ -1,8 +1,8 @@
 #include "Bullet.h"
 
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite) : Component::Component(associated){
-    Sprite* go_sprite = new Sprite(associated, sprite, 3, 0.3);
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime) : Component::Component(associated){    
+    Sprite* go_sprite = new Sprite(associated, sprite, frameCount, frameTime);
     go_sprite->SetScale(2, 2);
     associated.AddComponent(go_sprite);
 
@@ -18,10 +18,10 @@ void Bullet::Update(float dt){
         associated.RequestDelete();
     }
     else{
-        associated.box.x += speed.x * dt;
-        associated.box.y += speed.y * dt;
-        float distPassed = sqrt(pow(speed.x * dt, 2.0) + pow(speed.y * dt, 2.0));
-        distanceLeft -= distPassed;
+        //associated.box.x += speed.x * dt;
+        //associated.box.y += speed.y * dt;
+        //float distPassed = sqrt(pow(speed.x * dt, 2.0) + pow(speed.y * dt, 2.0));
+        //distanceLeft -= distPassed;
     }
 
 }

@@ -1,5 +1,5 @@
 #pragma once
-#define PI 3.151592
+#define PI 3.141592
 
 #include <math.h>
 #include <cstdlib>
