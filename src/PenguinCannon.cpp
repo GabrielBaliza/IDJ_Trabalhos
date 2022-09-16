@@ -11,6 +11,7 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
 }
 
 void PenguinCannon::Update(float dt){
+    cooldown.Update(dt);
     if(!pbody.lock()){
         associated.RequestDelete();
         return;
@@ -19,7 +20,7 @@ void PenguinCannon::Update(float dt){
     Vec2 pCenter = associated.box.Center();
     angle = atan2((InputManager::GetInstance().GetMouseY() - pCenter.y + Camera::pos.y), (InputManager::GetInstance().GetMouseX() - pCenter.x + Camera::pos.x));
     associated.angleDeg = (180.0/PI)*angle;
-    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON) && cooldown.Get() >= COOLDOWNTIME){
         Shoot();
     }
 }
@@ -31,6 +32,7 @@ bool PenguinCannon::Is(std::string type){
 }
 
 void PenguinCannon::Shoot(){
+    cooldown.Restart();
     GameObject* go_bullet = new GameObject();
     Bullet* bullet = new Bullet(*go_bullet, angle, PBULLETSPEED, P_DAMAGE, P_MAXDIST, PENGUIN_BULLET, false, 4, 0.5, {1.3, 1.3}, {0.9, 0.9});
 
