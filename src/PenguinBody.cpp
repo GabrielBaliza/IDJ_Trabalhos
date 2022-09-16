@@ -30,6 +30,13 @@ void PenguinBody::Start(){
 
 void PenguinBody::Update(float dt){
     if(hp <= 0){
+        State& state = Game::GetInstance().GetState();
+        GameObject* explosion = new GameObject();
+        Sprite* go_sprite = new Sprite(*explosion, PENGUIN_DEATH, 5, 0.2, 1);
+        explosion->box = associated.box;
+        explosion->AddComponent(go_sprite);
+        state.AddObject(explosion);
+
         pcannon.lock().get()->RequestDelete();
         associated.RequestDelete();
         Camera::Unfollow();

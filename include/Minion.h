@@ -2,6 +2,7 @@
 
 #define MINION "./assets/img/minion.png"
 #define BULLET "./assets/img/minionbullet2.png"
+#define MINION_DEATH "./assets/img/miniondeath.png"
 #define BULLETSPEED 300
 #define MAXDIST 500
 #define MINION_DAMAGE 15

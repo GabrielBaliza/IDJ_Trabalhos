@@ -7,7 +7,7 @@ Sprite::Sprite(GameObject& associated) : Component::Component(associated), textu
     scale = {1.0, 1.0};
 }
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime) : Component::Component(associated), texture(nullptr), frameCount(frameCount), frameTime(frameTime){
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Component::Component(associated), texture(nullptr), frameCount(frameCount), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct){
     scale = {1.0, 1.0};
     currentFrame = 0;
     timeElapsed = 0;
@@ -77,6 +77,12 @@ void Sprite::Update(float dt){
             currentFrame = 0;
         }
         SetFrame(currentFrame);
+    }
+    if(secondsToSelfDestruct > 0){
+        selfDestructCount.Update(dt);
+        if(selfDestructCount.Get() > secondsToSelfDestruct){
+            associated.RequestDelete();
+        }
     }
 }
 

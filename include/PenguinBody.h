@@ -1,6 +1,7 @@
 #pragma once
 
 #define PENGUIN_BODY "./assets/img/penguin.png"
+#define PENGUIN_DEATH "./assets/img/penguindeath.png"
 #define PLAYER_HP 50
 #define MAXSPEED 300
 #define ANG_SPEED 1.570796

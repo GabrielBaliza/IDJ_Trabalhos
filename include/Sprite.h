@@ -9,6 +9,7 @@
 #include "Resources.h"
 #include "Camera.h"
 #include "Vec2.h"
+#include "Timer.h"
 
 #include <iostream>
 #include <string>
@@ -24,9 +25,11 @@ class Sprite : public Component{
         int currentFrame;
         float timeElapsed;
         float frameTime;
+        Timer selfDestructCount;
+        float secondsToSelfDestruct;
     public:
         Sprite(GameObject& associated);
-        Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1);
+        Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
         ~Sprite();
         void Open(std::string file);
         void SetClip(int x, int y, int w, int h);

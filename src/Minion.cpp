@@ -64,6 +64,14 @@ void Minion::NotifyCollision(GameObject& other){
     if(bullet && !bullet->targetsPlayer){
         Alien* pAlien = (Alien*)alienCenter.lock().get()->GetComponent("Alien");
         pAlien->MinionHit(associated);
+
+        State& state = Game::GetInstance().GetState();
+        GameObject* explosion = new GameObject();
+        Sprite* go_sprite = new Sprite(*explosion, MINION_DEATH, 4, 0.3, 1.2);
+        explosion->box = associated.box;
+        explosion->AddComponent(go_sprite);
+        state.AddObject(explosion);
+
         associated.RequestDelete();
         std::cout << "Acertou o Minion" << std::endl;
     }

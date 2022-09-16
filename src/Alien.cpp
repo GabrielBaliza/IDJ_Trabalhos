@@ -72,6 +72,13 @@ void Alien::Update(float dt){
     }
     associated.angleDeg -= dt * ALIEN_ANG_VEL;
     if(hp <= 0){
+        State& state = Game::GetInstance().GetState();
+        GameObject* explosion = new GameObject();
+        Sprite* go_sprite = new Sprite(*explosion, ALIEN_DEATH, 4, 0.3, 1.2);
+        explosion->box = associated.box;
+        explosion->AddComponent(go_sprite);
+        state.AddObject(explosion);
+
         associated.RequestDelete();
     }
 }
