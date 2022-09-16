@@ -9,7 +9,9 @@ PenguinBody::PenguinBody(GameObject& associated) : Component::Component(associat
     hp = 50;
 
     Sprite* go_sprite = new Sprite(associated, PENGUIN_BODY);
+    Collider *go_collider = new Collider(associated, {0.75, 0.75}, {-5, 0});
     associated.AddComponent(go_sprite);
+    associated.AddComponent(go_collider);
 
     player = this;
 }
@@ -30,6 +32,8 @@ void PenguinBody::Update(float dt){
     if(hp <= 0){
         pcannon.lock().get()->RequestDelete();
         associated.RequestDelete();
+        Camera::Unfollow();
+        return;
     }
     if(InputManager::GetInstance().IsKeyDown(W_KEY)){
         linearSpeed += ACCELERATION*dt;
@@ -64,11 +68,31 @@ void PenguinBody::Update(float dt){
     associated.angleDeg = (180/PI)*angle;
     associated.box.x += speed.x*dt;
     associated.box.y += speed.y*dt;
-    
 }
 
 void PenguinBody::Render(){}
 
 bool PenguinBody::Is(std::string type){
     return (type == "PenguinBody");
+}
+
+void PenguinBody::ExternalDamage(int damage){
+    hp -= damage;
+    std::cout << "Baby hit!" << std::endl;
+    std::cout << "Player HP: " << hp << std::endl;
+}
+
+void PenguinBody::NotifyCollision(GameObject& other){
+    auto bullet = (Bullet*)other.GetComponent("Bullet");
+    auto minion = (Minion*)other.GetComponent("Minion");
+    auto alien = (Alien*)other.GetComponent("Alien");
+    if(bullet && bullet->targetsPlayer){
+        hp -= bullet->GetDamage({0,0});
+        std::cout << "Player HP: " << hp << std::endl;
+    }
+    if(alien || minion){
+        hp -= DMGCOLL;
+        std::cout << "Player HP: " << hp << std::endl;
+    }
+
 }

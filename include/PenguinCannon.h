@@ -12,6 +12,7 @@
 #include "InputManager.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Collider.h"
 
 #include <iostream>
 #include <string>
@@ -27,5 +28,6 @@ class PenguinCannon : public Component{
         void Render();
         bool Is(std::string type);
         void Shoot();
+        void NotifyCollision(GameObject& other);
 
 };

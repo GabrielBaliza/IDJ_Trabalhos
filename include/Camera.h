@@ -4,8 +4,6 @@
 #include "InputManager.h"
 #include "GameObject.h"
 
-
-
 class Camera{
     private:
         static GameObject* focus;

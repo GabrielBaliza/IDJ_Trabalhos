@@ -65,3 +65,9 @@ void GameObject::Start(){
     }
     started = true;
 }
+
+void GameObject::NotifyCollision(GameObject& other){
+    for(int it = components.size() - 1; it >= 0; it--){
+        components[it]->NotifyCollision(other);
+    }
+}

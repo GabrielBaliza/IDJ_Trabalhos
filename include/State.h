@@ -18,6 +18,7 @@
 #include "CameraFollower.h"
 #include "Alien.h"
 #include "PenguinBody.h"
+#include "Collision.h"
 
 class State{
     private:

@@ -13,6 +13,7 @@
 #include "Minion.h"
 #include "Game.h"
 #include "State.h"
+#include "Collider.h"
 
 #include <iostream>
 #include <string>
@@ -41,4 +42,6 @@ class Alien : public Component{
         void Update(float dt);
         void Render();
         bool Is(std::string type);
+        void NotifyCollision(GameObject& other);
+        void MinionHit(GameObject& minion);
 };

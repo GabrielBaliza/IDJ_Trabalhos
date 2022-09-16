@@ -13,6 +13,7 @@
 #include "Sprite.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Collider.h"
 
 #include <iostream>
 #include <string>
@@ -28,4 +29,5 @@ class Minion : public Component{
         void Render();
         bool Is(std::string type);
         void Shoot(Vec2 target);
+        void NotifyCollision(GameObject& other);
 };

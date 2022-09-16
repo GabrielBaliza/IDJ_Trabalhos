@@ -1,8 +1,12 @@
 #include "Alien.h"
 
 Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated){
+    
     Sprite* go_sprite = new Sprite(associated, ALIEN);
+    Collider *go_collider = new Collider(associated, {0.65, 0.6}, {-5, 0});
     associated.AddComponent(go_sprite);
+    associated.AddComponent(go_collider);
+
     speed = {0, 0};
     hp = MAXHP;
     minionArray.resize(nMinions);
@@ -76,4 +80,26 @@ void Alien::Render(){}
 
 bool Alien::Is(std::string type){
     return (type == "Alien");
+}
+
+void Alien::MinionHit(GameObject& minion){
+    auto tMinion = (Minion*)minion.GetComponent("Minion");
+    int id;
+    for(int it = 0; it < (int)minionArray.size(); it++){
+        if(tMinion == (Minion*)minionArray[it].lock().get()->GetComponent("Minion")){
+            std::cout << "Minion HIT" << std::endl;
+            id = it;
+            break;
+        }
+    }
+    minionArray.erase(minionArray.begin()+id);
+
+}
+
+void Alien::NotifyCollision(GameObject& other){
+    auto bullet = (Bullet*)other.GetComponent("Bullet");
+    if(bullet && !bullet->targetsPlayer){
+        hp -= bullet->GetDamage({0,0});
+        std::cout << "Alien HP: " << hp << std::endl;
+    }
 }

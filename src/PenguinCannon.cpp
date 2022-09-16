@@ -3,8 +3,11 @@
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody) : Component::Component(associated){
     angle = 0;
     pbody = penguinBody;
+    
     Sprite* go_sprite = new Sprite(associated, PENGUIN_CANNON);
+    Collider *go_collider = new Collider(associated, {0.5, 1}, {-27, 0});
     associated.AddComponent(go_sprite);
+    associated.AddComponent(go_collider);
 }
 
 void PenguinCannon::Update(float dt){
@@ -29,7 +32,7 @@ bool PenguinCannon::Is(std::string type){
 
 void PenguinCannon::Shoot(){
     GameObject* go_bullet = new GameObject();
-    Bullet* bullet = new Bullet(*go_bullet, angle, PBULLETSPEED, P_DAMAGE, P_MAXDIST, PENGUIN_BULLET, 4, 0.5);
+    Bullet* bullet = new Bullet(*go_bullet, angle, PBULLETSPEED, P_DAMAGE, P_MAXDIST, PENGUIN_BULLET, false, 4, 0.5, {1.3, 1.3}, {0.9, 0.9});
 
     Vec2 pCannonCenter = associated.box.Center();
     go_bullet->box.Centralize(pCannonCenter);
@@ -39,4 +42,12 @@ void PenguinCannon::Shoot(){
     
     go_bullet->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go_bullet);
+}
+
+void PenguinCannon::NotifyCollision(GameObject& other){
+    auto bullet = (Bullet*)other.GetComponent("Bullet");
+    if(bullet && bullet->targetsPlayer){
+        PenguinBody* tpbody = (PenguinBody*)pbody.lock().get()->GetComponent("PenguinBody");
+        tpbody->ExternalDamage(bullet->GetDamage({0,0}));
+    }
 }

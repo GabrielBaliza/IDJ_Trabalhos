@@ -19,8 +19,8 @@ void Camera::Update(float dt){
     speed.x = 0;
     speed.y = 0;
     if(focus != nullptr){
-        pos.x = focus->box.x;
-        pos.y = focus->box.y;
+        pos.x = focus->box.Center().x - 512;
+        pos.y = focus->box.Center().y - 300;
     }
     else{
         if(InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY) && InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY)){

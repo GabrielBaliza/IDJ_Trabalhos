@@ -7,11 +7,12 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     associated.angleDeg = 90;
 
     Sprite* go_sprite = new Sprite(associated, MINION);
-
     float randSize = (rand() % 51 + 100)/100.0;
     go_sprite->SetScale(randSize, randSize);
+    Collider *go_collider = new Collider(associated, {0.75, 0.75}, {0, 0});
     
     associated.AddComponent(go_sprite);
+    associated.AddComponent(go_collider);
     
     Vec2 posInicial{150, 0};
     posInicial.GetRotated(arc);
@@ -28,7 +29,6 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 
 void Minion::Update(float dt){
     if(!alienCenter.lock()){
-        alienCenter.lock()->RequestDelete();
         associated.RequestDelete();
         return;
     }
@@ -53,8 +53,18 @@ void Minion::Shoot(Vec2 target){
     GameObject* go_bullet = new GameObject();
     Vec2 minionCenter = associated.box.Center();
     float angle = atan2((target.y - minionCenter.y), (target.x - minionCenter.x));
-    Bullet* bullet = new Bullet(*go_bullet, angle, BULLETSPEED, MINION_DAMAGE, MAXDIST, BULLET, 3, 0.3);
+    Bullet* bullet = new Bullet(*go_bullet, angle, BULLETSPEED, MINION_DAMAGE, MAXDIST, BULLET, true, 3, 0.3, {2, 2}, {0.5, 0.6}, {14, 0});
     go_bullet->box.Centralize(minionCenter);
     go_bullet->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go_bullet);
+}
+
+void Minion::NotifyCollision(GameObject& other){
+    auto bullet = (Bullet*)other.GetComponent("Bullet");
+    if(bullet && !bullet->targetsPlayer){
+        Alien* pAlien = (Alien*)alienCenter.lock().get()->GetComponent("Alien");
+        pAlien->MinionHit(associated);
+        associated.RequestDelete();
+        std::cout << "Acertou o Minion" << std::endl;
+    }
 }

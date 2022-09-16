@@ -6,6 +6,7 @@
 #define ANG_SPEED 1.570796
 #define ACCELERATION 100
 #define DESACCELERATION 50
+#define DMGCOLL 10
 
 #include "Vec2.h"
 #include "GameObject.h"
@@ -14,6 +15,8 @@
 #include "PenguinCannon.h"
 #include "Sprite.h"
 #include "InputManager.h"
+#include "Collider.h"
+#include "Camera.h"
 
 #include <iostream>
 #include <string>
@@ -35,5 +38,7 @@ class PenguinBody : public Component
         void Update(float dt);
         void Render();
         bool Is(std::string type);
+        void NotifyCollision(GameObject& other);
+        void ExternalDamage(int damage);
         
 };

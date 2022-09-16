@@ -31,7 +31,7 @@ State::State(){
 	objectArray.emplace_back(gameObjectMap);
 
 	GameObject* gameObjectAlien = new GameObject();
-	Alien* go_alien = new Alien(*gameObjectAlien, 5);
+	Alien *go_alien = new Alien(*gameObjectAlien, 5);
 	gameObjectAlien->box.Centralize(512, 300);
 	gameObjectAlien->AddComponent(go_alien);
 	objectArray.emplace_back(gameObjectAlien);
@@ -43,6 +43,7 @@ State::State(){
 	objectArray.emplace_back(gameObjectPenguinBody);
 
 	LoadAssets();
+	Camera::Follow(gameObjectPenguinBody);
     music.Play(MUSIC_TIMESTOPLAY);
 }
 
@@ -62,16 +63,33 @@ void State::Update(float dt){
 	//std::cout << dt << std::endl;
 	Camera::Update(dt);
 	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+		music.Stop();
 		quitRequested = true;
 	}
-	if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
-		Vec2 objPos = Vec2(150.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
-		AddObject((int)objPos.x, (int)objPos.y);
-	}
+
+	// if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
+	// 	Vec2 objPos = Vec2(150.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
+	// 	AddObject((int)objPos.x, (int)objPos.y);
+	// }
+
     for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		objectArray[it]->Update(dt);
-    }
+    
+	}
+	for(int i = 0; i <= (int)objectArray.size() - 1; i++){
+		for(int j = i+1; j <= (int)objectArray.size() - 1; j++){
+			Collider *colliderA = (Collider*) objectArray[i]->GetComponent("Collider");
+            Collider *colliderB = (Collider*) objectArray[j]->GetComponent("Collider");
+			if(colliderA && colliderB){
+				if(Collision::IsColliding(colliderA->box, colliderB->box, (float)objectArray[i]->angleDeg, (float)objectArray[j]->angleDeg)){
+					objectArray[i]->NotifyCollision(*objectArray[j]);
+					objectArray[j]->NotifyCollision(*objectArray[i]);
+				}
 
+			}
+
+    	}
+    }
 	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
 		if(objectArray[it]->IsDead()){
 			objectArray.erase(objectArray.begin()+it);
