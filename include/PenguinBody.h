@@ -41,5 +41,6 @@ class PenguinBody : public Component
         bool Is(std::string type);
         void NotifyCollision(GameObject& other);
         void ExternalDamage(int damage);
+        Vec2 PlayerPos();
         
 };

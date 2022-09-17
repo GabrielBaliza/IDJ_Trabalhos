@@ -1,5 +1,7 @@
 #include "Alien.h"
 
+int Alien::alienCount = 0;
+
 Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated){
     
     Sprite* go_sprite = new Sprite(associated, ALIEN);
@@ -8,15 +10,18 @@ Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associ
     associated.AddComponent(go_collider);
 
     speed = {0, 0};
+    destination = {associated.box.x, associated.box.y};
     hp = MAXHP;
     minionArray.resize(nMinions);
+    state = AlienState::RESTING;
+
+    alienCount++;
 }
 
 Alien::~Alien(){
+    alienCount--;
     minionArray.clear();
 }
-
-Alien::Action::Action(ActionType type, float x, float y) : type(type), pos({x, y}){}
 
 void Alien::Start(){
     State& state = Game::GetInstance().GetState();
@@ -30,47 +35,6 @@ void Alien::Start(){
 }
 
 void Alien::Update(float dt){
-    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
-        Action objAction(Action::ActionType::SHOOT, InputManager::GetInstance().GetMouseX() + Camera::pos.x, InputManager::GetInstance().GetMouseY() + Camera::pos.y);
-        taskQueue.push(objAction);
-    }
-    if(InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)){
-        Action objAction(Action::ActionType::MOVE, InputManager::GetInstance().GetMouseX() + Camera::pos.x, InputManager::GetInstance().GetMouseY() + Camera::pos.y);
-        taskQueue.push(objAction);
-    }
-    if(taskQueue.size() >= 1){
-        if(taskQueue.front().type == Action::ActionType::MOVE){
-            float dist;
-            dist = sqrt(pow((taskQueue.front().pos.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((taskQueue.front().pos.y - (associated.box.y + associated.box.h/2)), 2.0));
-            speed.x = SPEED*(taskQueue.front().pos.x - (associated.box.x + associated.box.w/2))/dist;
-            speed.y = SPEED*(taskQueue.front().pos.y - (associated.box.y + associated.box.h/2))/dist;
-            associated.box.x += dt*speed.x;
-            associated.box.y += dt*speed.y;
-            if(dist <= dt * SPEED){
-                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
-                associated.box.y = taskQueue.front().pos.y - associated.box.h/2;
-                taskQueue.pop();
-            }
-        }
-        else if(taskQueue.front().type == Action::ActionType::SHOOT){
-            if(minionArray.size() > 0){
-                float minDist = 100000000, dist;
-                int closest = 0;
-                for(int it = 0; it < (int)minionArray.size(); it++){
-                    dist = sqrt(pow((taskQueue.front().pos.x - (minionArray[it].lock().get()->box.x)), 2.0) + pow((taskQueue.front().pos.y - (minionArray[it].lock().get()->box.y)), 2.0));
-                    if(dist < minDist){
-                        minDist = dist;
-                        closest = it;
-                    }
-                }
-                //int randMinion = std::rand() % minionArray.size();
-                Minion* cMinion = (Minion*)minionArray[closest].lock().get()->GetComponent("Minion");
-                cMinion->Shoot(taskQueue.front().pos);
-            }
-            taskQueue.pop();    
-        }
-    }
-    associated.angleDeg -= dt * ALIEN_ANG_VEL;
     if(hp <= 0){
         State& state = Game::GetInstance().GetState();
         GameObject* explosion = new GameObject();
@@ -81,6 +45,48 @@ void Alien::Update(float dt){
 
         associated.RequestDelete();
     }
+    if(PenguinBody::player){
+        if(state == AlienState::RESTING){
+            restTimer.Update(dt);
+            if(restTimer.Get() >= RESTINGCOOLDOWN){
+                destination = PenguinBody::player->PlayerPos();
+                float dist;
+                dist = sqrt(pow((destination.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((destination.y - (associated.box.y + associated.box.h/2)), 2.0));
+                speed.x = SPEED*(destination.x - (associated.box.x + associated.box.w/2))/dist;
+                speed.y = SPEED*(destination.y - (associated.box.y + associated.box.h/2))/dist;
+
+                state = AlienState::MOVING;
+                
+            }
+        }
+        else{ // (state == AlienState::MOVING)
+            float dist;
+            dist = sqrt(pow((destination.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((destination.y - (associated.box.y + associated.box.h/2)), 2.0));
+            associated.box.x += dt*speed.x;
+            associated.box.y += dt*speed.y;
+            if(dist <= dt * SPEED){
+                associated.box.x = destination.x - associated.box.w/2;
+                associated.box.y = destination.y - associated.box.h/2;
+                if(minionArray.size() > 0){
+                    Vec2 posPlayer = PenguinBody::player->PlayerPos();
+                    float minDist = 100000000, dist;
+                    int closest = 0;
+                    for(int it = 0; it < (int)minionArray.size(); it++){
+                        dist = sqrt(pow((posPlayer.x - (minionArray[it].lock().get()->box.x)), 2.0) + pow((posPlayer.y - (minionArray[it].lock().get()->box.y)), 2.0));
+                        if(dist < minDist){
+                            minDist = dist;
+                            closest = it;
+                        }
+                    }
+                    Minion* cMinion = (Minion*)minionArray[closest].lock().get()->GetComponent("Minion");
+                    cMinion->Shoot(posPlayer);
+                }
+                restTimer.Restart();
+                state = AlienState::RESTING;
+            }
+        }
+    }
+    associated.angleDeg -= dt * ALIEN_ANG_VEL;
 }
 
 void Alien::Render(){}

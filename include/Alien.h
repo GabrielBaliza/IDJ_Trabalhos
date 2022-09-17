@@ -1,11 +1,12 @@
 #pragma once
 
-#define SPEED 100
+#define SPEED 150
 #define ALIEN "./assets/img/alien.png"
 #define ALIEN_DEATH "./assets/img/aliendeath.png"
 #define MAXHP 100
 #define PI2 6.283185307
 #define ALIEN_ANG_VEL 25
+#define RESTINGCOOLDOWN 0.75
 
 #include "Component.h"
 #include "Vec2.h"
@@ -15,6 +16,8 @@
 #include "Game.h"
 #include "State.h"
 #include "Collider.h"
+#include "Timer.h"
+#include "PenguinBody.h"
 
 #include <iostream>
 #include <string>
@@ -25,18 +28,15 @@
 
 class Alien : public Component{
     private:
-        class Action{
-            public:
-            enum ActionType{MOVE, SHOOT};
-            Action(ActionType type, float x, float y);
-            ActionType type;
-            Vec2 pos;
-        };
+        enum AlienState{MOVING, RESTING};
+        AlienState state;
+        Timer restTimer;
+        Vec2 destination;
         Vec2 speed;
         int hp;
-        std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
     public:
+        static int alienCount;
         Alien(GameObject& associated, int nMinions);
         ~Alien();
         void Start();

@@ -103,3 +103,7 @@ void PenguinBody::NotifyCollision(GameObject& other){
     }
 
 }
+
+Vec2 PenguinBody::PlayerPos(){
+    return associated.box.Center();
+}
