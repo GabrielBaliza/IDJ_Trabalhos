@@ -68,10 +68,12 @@ void Minion::NotifyCollision(GameObject& other){
         State& state = Game::GetInstance().GetState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, MINION_DEATH, 4, 0.3, 1.2);
+        Sound* boom = new Sound(*explosion, BOOM);
         explosion->box = associated.box;
         explosion->AddComponent(go_sprite);
+        explosion->AddComponent(boom);
         state.AddObject(explosion);
-
+        boom->Play();
         associated.RequestDelete();
         std::cout << "Acertou o Minion" << std::endl;
     }

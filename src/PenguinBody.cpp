@@ -33,10 +33,12 @@ void PenguinBody::Update(float dt){
         State& state = Game::GetInstance().GetState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, PENGUIN_DEATH, 5, 0.2, 1);
+        Sound* boom = new Sound(*explosion, BOOM);
         explosion->box = associated.box;
         explosion->AddComponent(go_sprite);
+        explosion->AddComponent(boom);
         state.AddObject(explosion);
-
+        boom->Play();
         pcannon.lock().get()->RequestDelete();
         associated.RequestDelete();
         Camera::Unfollow();

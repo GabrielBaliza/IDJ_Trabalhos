@@ -3,6 +3,7 @@
 #define MINION "./assets/img/minion.png"
 #define BULLET "./assets/img/minionbullet2.png"
 #define MINION_DEATH "./assets/img/miniondeath.png"
+#define BOOM "./assets/audio/boom.wav"
 #define BULLETSPEED 300
 #define MAXDIST 500
 #define MINION_DAMAGE 15
@@ -15,6 +16,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "Collider.h"
+#include "Sound.h"
 
 #include <iostream>
 #include <string>

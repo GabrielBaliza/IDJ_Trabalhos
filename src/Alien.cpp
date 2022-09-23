@@ -39,8 +39,11 @@ void Alien::Update(float dt){
         State& state = Game::GetInstance().GetState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, ALIEN_DEATH, 4, 0.3, 1.2);
+        Sound* boom = new Sound(*explosion, BOOM);
         explosion->box = associated.box;
         explosion->AddComponent(go_sprite);
+        explosion->AddComponent(boom);
+        boom->Play();
         state.AddObject(explosion);
 
         associated.RequestDelete();
