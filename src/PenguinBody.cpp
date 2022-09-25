@@ -77,6 +77,19 @@ void PenguinBody::Update(float dt){
     associated.angleDeg = (180/PI)*angle;
     associated.box.x += speed.x*dt;
     associated.box.y += speed.y*dt;
+    if(associated.box.x > 1258){
+        associated.box.x = 1258;
+    }
+    if(associated.box.x < 0){
+        associated.box.x = 0;
+    }
+    if(associated.box.y > 1180){
+        associated.box.y = 1180;
+    }
+    if(associated.box.y < 0){
+        associated.box.y = 0;
+    }
+    
 }
 
 void PenguinBody::Render(){}
