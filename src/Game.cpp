@@ -96,39 +96,38 @@ void Game::Push(State* state){
 
 void Game::Run(){
     if(storedState == nullptr){
-        return;
+        exit(1);
     }
-    else{
-        stateStack.emplace(storedState);
-        storedState->Start();
-        storedState = nullptr;
-    }
+    stateStack.emplace(storedState);
+    storedState = nullptr;
     State *currentState = &GetCurrentState();
+    currentState->Start();
     while(!currentState->QuitRequested() && !stateStack.empty()){
         if(currentState->PopRequested()){
             stateStack.pop();
-            Resources::ClearImages();
-            Resources::ClearMusics();
-            Resources::ClearSound();
+            
             if(!stateStack.empty()){
                 currentState = &GetCurrentState();
                 currentState->Resume();
+            }
+            else{
+                break;
             }
         }
         if(storedState != nullptr){
             currentState->Pause();
             stateStack.emplace(storedState);
-            currentState->Start();
             storedState = nullptr;
-
+            currentState = &GetCurrentState();
+            currentState->Start();
         }
+
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
         currentState->Update(GetDeltaTime());
         currentState->Render();
         SDL_RenderPresent(renderer);
-    }
-    
+    }    
 }
 
 float Game::GetDeltaTime(){

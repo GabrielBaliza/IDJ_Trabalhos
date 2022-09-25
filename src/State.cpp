@@ -41,7 +41,7 @@ bool State::QuitRequested(){
 }
 
 void State::StartArray(){
-	for(int it = 0; it <= (int)objectArray.size() - 1; it++){
+	for(int it = 0; it <(int)objectArray.size(); it++){
 		objectArray[it]->Start();
     }
 	started = true;

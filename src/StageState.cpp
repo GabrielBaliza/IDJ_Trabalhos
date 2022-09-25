@@ -58,9 +58,14 @@ void StageState::LoadAssets(){
 void StageState::Update(float dt){
 	//std::cout << dt << std::endl;
 	Camera::Update(dt);
-	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
-		backgroundMusic.Stop();
+
+	if(InputManager::GetInstance().QuitRequested()){
 		quitRequested = true;
+		backgroundMusic.Stop();
+	}
+	
+	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+		popRequested = true;
 	}
 
 	// if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
@@ -100,8 +105,6 @@ void StageState::Render(){
 void StageState::Start(){
 	LoadAssets();
 	StartArray();
-	started = true;
-
 }
 
 void StageState::Pause(){}
