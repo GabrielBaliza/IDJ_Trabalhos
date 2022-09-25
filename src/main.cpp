@@ -4,10 +4,12 @@
 
 #include "SDL_include.h"
 #include "Game.h"
+#include "StageState.h"
 #include <iostream>
 
 int main (int argc, char** argv) {
-    Game &jogoT1 = Game::GetInstance();
-    jogoT1.Run();
+    Game &jogo = Game::GetInstance();
+    jogo.Push(new StageState);
+    jogo.Run();
     return 0;
 }

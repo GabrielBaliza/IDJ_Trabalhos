@@ -43,7 +43,7 @@ void PenguinCannon::Shoot(){
     go_bullet->box.y += 70*sin(angle) - 30;
     
     go_bullet->AddComponent(bullet);
-    Game::GetInstance().GetState().AddObject(go_bullet);
+    Game::GetInstance().GetCurrentState().AddObject(go_bullet);
 }
 
 void PenguinCannon::NotifyCollision(GameObject& other){

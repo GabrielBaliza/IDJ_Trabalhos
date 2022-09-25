@@ -17,6 +17,7 @@
 #include "Game.h"
 #include "Collider.h"
 #include "Sound.h"
+#include "Alien.h"
 
 #include <iostream>
 #include <string>

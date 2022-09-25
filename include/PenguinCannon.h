@@ -15,6 +15,7 @@
 #include "Game.h"
 #include "Collider.h"
 #include "Timer.h"
+#include "PenguinBody.h"
 
 #include <iostream>
 #include <string>

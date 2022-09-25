@@ -7,31 +7,6 @@
 
 Game *Game::instance = nullptr;
 
-void Game::Run(){
-    state->Start();
-    while(!state->QuitRequested()){
-        CalculateDeltaTime();
-        InputManager::GetInstance().Update();
-        state->Update(GetDeltaTime());
-        state->Render();
-        SDL_RenderPresent(renderer);
-    }
-    Resources::ClearImages();
-    Resources::ClearMusics();
-    Resources::ClearSound();
-}
-
-void Game::CalculateDeltaTime(){
-    int prevFrame;
-    prevFrame = frameStart;
-    frameStart = SDL_GetTicks();
-    dt = (frameStart - prevFrame)/1000.0;
-}   
-
-float Game::GetDeltaTime(){
-    return dt;
-}
-
 Game::Game(std::string title, int width, int height){
     dt = 0;
     frameStart = 0;
@@ -78,12 +53,16 @@ Game::Game(std::string title, int width, int height){
         return;
     }
     
-    state = new State();
+    storedState = nullptr;
 
 }
 
 Game::~Game(){
-
+    if(storedState != nullptr) delete storedState;
+    while(!stateStack.empty()) stateStack.pop();
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSound();
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();
@@ -91,14 +70,6 @@ Game::~Game(){
     IMG_Quit();    
     SDL_Quit();
 
-}
-
-SDL_Renderer* Game::GetRenderer(){
-    return renderer;
-}
-    
-State& Game::GetState(){
-    return *state;
 }
 
 Game& Game::GetInstance(){
@@ -110,3 +81,63 @@ Game& Game::GetInstance(){
         return *instance;
     }
 }
+
+SDL_Renderer* Game::GetRenderer(){
+    return renderer;
+}
+    
+State& Game::GetCurrentState(){
+    return *stateStack.top();
+}
+
+void Game::Push(State* state){
+    storedState = state;
+}
+
+void Game::Run(){
+    if(storedState == nullptr){
+        return;
+    }
+    else{
+        stateStack.emplace(storedState);
+        storedState->Start();
+        storedState = nullptr;
+    }
+    State *currentState = &GetCurrentState();
+    while(!currentState->QuitRequested() && !stateStack.empty()){
+        if(currentState->PopRequested()){
+            stateStack.pop();
+            Resources::ClearImages();
+            Resources::ClearMusics();
+            Resources::ClearSound();
+            if(!stateStack.empty()){
+                currentState = &GetCurrentState();
+                currentState->Resume();
+            }
+        }
+        if(storedState != nullptr){
+            currentState->Pause();
+            stateStack.emplace(storedState);
+            currentState->Start();
+            storedState = nullptr;
+
+        }
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        currentState->Update(GetDeltaTime());
+        currentState->Render();
+        SDL_RenderPresent(renderer);
+    }
+    
+}
+
+float Game::GetDeltaTime(){
+    return dt;
+}
+
+void Game::CalculateDeltaTime(){
+    int prevFrame;
+    prevFrame = frameStart;
+    frameStart = SDL_GetTicks();
+    dt = (frameStart - prevFrame)/1000.0;
+}   

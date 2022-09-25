@@ -13,24 +13,26 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <stack>
 
 class State;
 class Game{
     private:
-        static Game *instance;
-        SDL_Window *window;
-        SDL_Renderer *renderer;
-        State *state;
         int frameStart;
         float dt;
+        static Game *instance;
+        State *storedState;
+        SDL_Window *window;
+        SDL_Renderer *renderer;
+        std::stack<std::unique_ptr<State>> stateStack;        
         void CalculateDeltaTime();
-        Game(std::string title, int width, int height);
     public:
-        void Run();
-        float GetDeltaTime();
+        Game(std::string title, int width, int height);
         ~Game();
-        SDL_Renderer* GetRenderer();
-        State& GetState();
         static Game& GetInstance();
-
+        SDL_Renderer* GetRenderer();
+        State& GetCurrentState();   
+        void Push(State* state);
+        void Run();
+        float GetDeltaTime();     
 };

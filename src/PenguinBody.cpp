@@ -22,7 +22,7 @@ PenguinBody::~PenguinBody(){
 
 void PenguinBody::Start(){
     GameObject* go = new GameObject();
-    State& state = Game::GetInstance().GetState();
+    State& state = Game::GetInstance().GetCurrentState();
     PenguinCannon* go_pcannon = new PenguinCannon(*go, state.GetObjectPtr(&associated));
     go->AddComponent(go_pcannon);
     pcannon = state.AddObject(go);
@@ -30,7 +30,7 @@ void PenguinBody::Start(){
 
 void PenguinBody::Update(float dt){
     if(hp <= 0){
-        State& state = Game::GetInstance().GetState();
+        State& state = Game::GetInstance().GetCurrentState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, PENGUIN_DEATH, 5, 0.2, 1);
         Sound* boom = new Sound(*explosion, BOOM);

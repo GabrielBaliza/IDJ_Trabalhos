@@ -24,7 +24,7 @@ Alien::~Alien(){
 }
 
 void Alien::Start(){
-    State& state = Game::GetInstance().GetState();
+    State& state = Game::GetInstance().GetCurrentState();
     for(int i = 0; i < (int) minionArray.size(); i++){
         float distribute = PI2*i/minionArray.size();
         GameObject* go = new GameObject();
@@ -36,7 +36,7 @@ void Alien::Start(){
 
 void Alien::Update(float dt){
     if(hp <= 0){
-        State& state = Game::GetInstance().GetState();
+        State& state = Game::GetInstance().GetCurrentState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, ALIEN_DEATH, 4, 0.3, 1.2);
         Sound* boom = new Sound(*explosion, BOOM);

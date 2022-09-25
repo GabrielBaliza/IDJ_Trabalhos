@@ -56,7 +56,7 @@ void Minion::Shoot(Vec2 target){
     Bullet* bullet = new Bullet(*go_bullet, angle, BULLETSPEED, MINION_DAMAGE, MAXDIST, BULLET, true, 3, 0.3, {2, 2}, {0.5, 0.6}, {14, 0});
     go_bullet->box.Centralize(minionCenter);
     go_bullet->AddComponent(bullet);
-    Game::GetInstance().GetState().AddObject(go_bullet);
+    Game::GetInstance().GetCurrentState().AddObject(go_bullet);
 }
 
 void Minion::NotifyCollision(GameObject& other){
@@ -65,7 +65,7 @@ void Minion::NotifyCollision(GameObject& other){
         Alien* pAlien = (Alien*)alienCenter.lock().get()->GetComponent("Alien");
         pAlien->MinionHit(associated);
 
-        State& state = Game::GetInstance().GetState();
+        State& state = Game::GetInstance().GetCurrentState();
         GameObject* explosion = new GameObject();
         Sprite* go_sprite = new Sprite(*explosion, MINION_DEATH, 4, 0.3, 1.2);
         Sound* boom = new Sound(*explosion, BOOM);

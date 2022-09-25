@@ -2,6 +2,7 @@
 
 #define PENGUIN_BODY "./assets/img/penguin.png"
 #define PENGUIN_DEATH "./assets/img/penguindeath.png"
+#define BOOM "./assets/audio/boom.wav"
 #define PLAYER_HP 50
 #define MAXSPEED 300
 #define ANG_SPEED 1.570796
@@ -18,6 +19,9 @@
 #include "InputManager.h"
 #include "Collider.h"
 #include "Camera.h"
+#include "Sound.h"
+#include "Minion.h"
+#include "Alien.h"
 
 #include <iostream>
 #include <string>

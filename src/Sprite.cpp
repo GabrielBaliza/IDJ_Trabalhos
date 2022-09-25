@@ -1,3 +1,4 @@
+#include "Sprite.h"
 #include "Game.h"
 
 #define clipOriginX 0
