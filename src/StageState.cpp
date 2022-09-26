@@ -32,13 +32,13 @@ StageState::StageState(){
 
 	GameObject* gameObjectPenguinBody = new GameObject();
 	PenguinBody *penguinBody = new PenguinBody(*gameObjectPenguinBody);
-	gameObjectPenguinBody->box.Centralize(100, 100);
+	gameObjectPenguinBody->box.Centralize(200, 150);
 	gameObjectPenguinBody->AddComponent(penguinBody);
 	objectArray.emplace_back(gameObjectPenguinBody);
 
 	for(int j = 1; j <= 3; j++){
 		GameObject* gameObjectAlien = new GameObject();
-		Alien *go_alien = new Alien(*gameObjectAlien, 5);
+		Alien *go_alien = new Alien(*gameObjectAlien, 5, j/2);
 		gameObjectAlien->box.Centralize(j*400,1200);
 		gameObjectAlien->AddComponent(go_alien);
 		objectArray.emplace_back(gameObjectAlien);
@@ -70,11 +70,13 @@ void StageState::Update(float dt){
 		popRequested = true;
 	}
 	if(PenguinBody::player == nullptr){
+		backgroundMusic.Stop(0);
 		GameData::playerVictory = false;
 		popRequested = true;
 		Game::GetInstance().Push(new EndState);
 	}
 	if(Alien::alienCount == 0){
+		backgroundMusic.Stop(0);
 		GameData::playerVictory = true;
 		popRequested = true;
 		Game::GetInstance().Push(new EndState);

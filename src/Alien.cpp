@@ -2,7 +2,7 @@
 
 int Alien::alienCount = 0;
 
-Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated){
+Alien::Alien(GameObject& associated, int nMinions, float offset) : Component::Component(associated){
     
     Sprite* go_sprite = new Sprite(associated, ALIEN);
     Collider *go_collider = new Collider(associated, {0.65, 0.6}, {-5, 0});
@@ -14,7 +14,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associ
     hp = MAXHP;
     minionArray.resize(nMinions);
     state = AlienState::RESTING;
-
+    timeOffset = offset;
     alienCount++;
 }
 
@@ -51,7 +51,7 @@ void Alien::Update(float dt){
     if(PenguinBody::player){
         if(state == AlienState::RESTING){
             restTimer.Update(dt);
-            if(restTimer.Get() >= RESTINGCOOLDOWN){
+            if(restTimer.Get() >= RESTINGCOOLDOWN + timeOffset){
                 destination = PenguinBody::player->PlayerPos();
                 float dist;
                 dist = sqrt(pow((destination.x - (associated.box.x + associated.box.w/2)), 2.0) + pow((destination.y - (associated.box.y + associated.box.h/2)), 2.0));

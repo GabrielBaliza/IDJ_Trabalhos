@@ -34,10 +34,11 @@ class Alien : public Component{
         Vec2 destination;
         Vec2 speed;
         int hp;
+        float timeOffset;
         std::vector<std::weak_ptr<GameObject>> minionArray;
     public:
         static int alienCount;
-        Alien(GameObject& associated, int nMinions);
+        Alien(GameObject& associated, int nMinions, float offset);
         ~Alien();
         void Start();
         void Update(float dt);

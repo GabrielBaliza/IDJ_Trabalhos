@@ -7,7 +7,6 @@ EndState::EndState(){
         win->AddComponent(winSprite);
         AddObject(win);
         backgroundMusic.Open(YOUWIN_MUSIC);
-        backgroundMusic.Play();
     }
     else{
         GameObject* lose = new GameObject();
@@ -15,11 +14,10 @@ EndState::EndState(){
         lose->AddComponent(loseSprite);
         AddObject(lose);
         backgroundMusic.Open(YOULOSE_MUSIC);
-        backgroundMusic.Play();
     }
     
     instructionText = new GameObject();
-    Text* text1 = new Text(*instructionText, FONT, 30, Text::TextStyle::SOLID, "Press spacebar to play again! Press esc to close...", {0, 0, 0, 255});
+    Text* text = new Text(*instructionText, FONT, 30, Text::TextStyle::SOLID, "Press spacebar to play again! Press esc to close...", {0, 0, 0, 255});
     instructionText->AddComponent(text);
     instructionText->box.x = 1024/2 - instructionText->box.w/2;
     instructionText->box.y = 500;
@@ -57,6 +55,7 @@ void EndState::Render(){
 
 void EndState::Start(){
 	StartArray();
+    backgroundMusic.Play(-1);
 }
 
 void EndState::Pause(){}
