@@ -3,8 +3,8 @@
 #define PENGUIN_BODY "./assets/img/penguin.png"
 #define PENGUIN_DEATH "./assets/img/penguindeath.png"
 #define BOOM "./assets/audio/boom.wav"
-#define PLAYER_HP 50
-#define MAXSPEED 300
+#define PLAYER_HP 100
+#define MAXSPEED 350
 #define ANG_SPEED 1.570796
 #define ACCELERATION 100
 #define DESACCELERATION 50

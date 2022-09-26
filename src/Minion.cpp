@@ -35,7 +35,7 @@ void Minion::Update(float dt){
     else{
         arc += dt * ANG_VEL;
         associated.angleDeg = arc;
-        Vec2 posInicial{150, 0};
+        Vec2 posInicial{100, 0};
         posInicial.GetRotated(arc);
         associated.angleDeg = (180/PI)*arc;
         posInicial = alienCenter.lock()->box.Center() + posInicial;

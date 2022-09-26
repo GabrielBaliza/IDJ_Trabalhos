@@ -30,17 +30,19 @@ StageState::StageState(){
 	gameObjectMap->AddComponent(go_tileMap);
 	objectArray.emplace_back(gameObjectMap);
 
-	GameObject* gameObjectAlien = new GameObject();
-	Alien *go_alien = new Alien(*gameObjectAlien, 5);
-	gameObjectAlien->box.Centralize(512, 300);
-	gameObjectAlien->AddComponent(go_alien);
-	objectArray.emplace_back(gameObjectAlien);
-
 	GameObject* gameObjectPenguinBody = new GameObject();
 	PenguinBody *penguinBody = new PenguinBody(*gameObjectPenguinBody);
-	gameObjectPenguinBody->box.Centralize(704, 640);
+	gameObjectPenguinBody->box.Centralize(100, 100);
 	gameObjectPenguinBody->AddComponent(penguinBody);
 	objectArray.emplace_back(gameObjectPenguinBody);
+
+	for(int j = 1; j <= 3; j++){
+		GameObject* gameObjectAlien = new GameObject();
+		Alien *go_alien = new Alien(*gameObjectAlien, 5);
+		gameObjectAlien->box.Centralize(j*400,1200);
+		gameObjectAlien->AddComponent(go_alien);
+		objectArray.emplace_back(gameObjectAlien);
+	}
 
 	LoadAssets();
 	Camera::Follow(gameObjectPenguinBody);
@@ -67,11 +69,17 @@ void StageState::Update(float dt){
 	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
-
-	// if(InputManager::GetInstance().KeyPress(SPACE_BAR)){
-	// 	Vec2 objPos = Vec2(150.0, 0.0).GetRotated( -PI + PI*(std::rand() % 1001)/500.0 ) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
-	// 	AddObject((int)objPos.x, (int)objPos.y);
-	// }
+	if(PenguinBody::player == nullptr){
+		GameData::playerVictory = false;
+		popRequested = true;
+		Game::GetInstance().Push(new EndState);
+	}
+	if(Alien::alienCount == 0){
+		GameData::playerVictory = true;
+		popRequested = true;
+		Game::GetInstance().Push(new EndState);
+	}
+	
 
     UpdateArray(dt);
 

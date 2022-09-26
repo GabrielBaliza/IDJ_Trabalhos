@@ -3,7 +3,7 @@
 #define SPEED 150
 #define ALIEN "./assets/img/alien.png"
 #define ALIEN_DEATH "./assets/img/aliendeath.png"
-#define MAXHP 100
+#define MAXHP 50
 #define PI2 6.283185307
 #define ALIEN_ANG_VEL 25
 #define RESTINGCOOLDOWN 0.75

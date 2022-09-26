@@ -2,9 +2,9 @@
 
 #define PENGUIN_CANNON "./assets/img/cubngun.png"
 #define PENGUIN_BULLET "./assets/img/penguinbullet.png"
-#define PBULLETSPEED 200
+#define PBULLETSPEED 250
 #define P_DAMAGE 10
-#define P_MAXDIST 250
+#define P_MAXDIST 500
 #define COOLDOWNTIME 0.5
 
 #include "GameObject.h"
