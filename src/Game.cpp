@@ -18,6 +18,11 @@ Game::Game(std::string title, int width, int height){
         instance = this;
         
     }
+    if(TTF_Init() != 0){
+        std::cout << "TTF initialization error" << std::endl;
+        std::cout << SDL_GetError() << std::endl;
+        return;
+    }
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0){
         std::cout << "SDL initialization error" << std::endl;
         std::cout << SDL_GetError() << std::endl;
@@ -63,12 +68,14 @@ Game::~Game(){
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSound();
+    Resources::ClearFonts();
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();
     Mix_Quit();
     IMG_Quit();    
     SDL_Quit();
+    TTF_Quit();
 
 }
 

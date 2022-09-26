@@ -1,6 +1,7 @@
 #pragma once
 
 #define TITLE "./assets/img/title.jpg"
+#define FONT "./assets/font/Call me maybe.ttf"
 
 #include <vector>
 #include <memory>
@@ -16,8 +17,13 @@
 #include "State.h"
 #include "StageState.h"
 #include "Camera.h"
+#include "Text.h"
+#include "Timer.h"
 
 class TitleState : public State {
+    private:
+        GameObject* instructionText;
+        Timer instructionTimer;
     public:
         TitleState();
         ~TitleState();
